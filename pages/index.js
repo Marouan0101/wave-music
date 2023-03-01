@@ -1,9 +1,33 @@
 import Head from 'next/head'
-import { Inter } from "next/font/google";
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useRouter } from 'next/router';
+import {auth} from '../firebase/auth'
+import getAlbums from '../firebase/getAlbums';
+import { useState } from 'react';
+import "firebase/firestore";
 
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const [albums, setAlbums] = useState(null)
+  const router = useRouter();
+  const [user, loading] = useAuthState(auth);
+
+  getAlbums.then((data) => {
+    setAlbums(data)
+  });
+
+  console.log(albums)
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (!user) {
+    router.push("/login")
+  }
+
+  console.log(user)
+
   return (
     <>
       <Head>
@@ -13,7 +37,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 className='text-4xl'>Hej</h1>
+        
+        <div>
+          {albums?.map(album => {
+            return <div key={album.id}>{album.name}</div>
+          })}
+        </div>
       </main>
     </>
   )

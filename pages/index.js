@@ -7,15 +7,8 @@ import { useState } from 'react';
 import 'firebase/firestore';
 
 export default function Home() {
-  const [albums, setAlbums] = useState(null);
   const router = useRouter();
   const [user, loading] = useAuthState(auth);
-
-  getAlbums.then((data) => {
-    setAlbums(data);
-  });
-
-  console.log(albums);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -36,15 +29,7 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className='w-full overflow-auto'>
-        <div>
-          {albums?.map((album) => {
-            return (
-              <div className='' key={album.id}>
-                {album.name}
-              </div>
-            );
-          })}
-        </div>
+        <div></div>
       </main>
     </>
   );

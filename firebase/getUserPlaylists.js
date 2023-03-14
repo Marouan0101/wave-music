@@ -1,10 +1,8 @@
 import { playlistsRef } from './firestore';
 import { getDocs } from 'firebase/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from './auth';
 
 // get collection data
-const getPlaylists = async (user) => {
+const getUserPlaylists = async (user) => {
   const playlists = [];
 
   await getDocs(playlistsRef)
@@ -22,4 +20,4 @@ const getPlaylists = async (user) => {
   return playlists;
 };
 
-export default getPlaylists;
+export default getUserPlaylists;

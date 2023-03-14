@@ -1,12 +1,15 @@
 import Link from 'next/link';
 
-const SidemenuPlaylist = ({ name, id }) => {
+const SidemenuPlaylist = ({ name, image, id }) => {
   return (
     <Link
       href={'playlist/' + id}
       className='flex  items-center space-x-1 text-sm font-medium'
     >
-      <img className='h-[1.875rem] w-[1.875rem] rounded-md' />
+      {image && (
+        <img src={image} className='h-[1.875rem] w-[1.875rem] rounded-md' />
+      )}
+
       <div>{name}</div>
     </Link>
   );

@@ -6,7 +6,7 @@ import PlaylistIcon from '../public/PlaylistIcon.svg';
 import Link from 'next/link';
 import SidemenuPlaylist from './SidemenuPlaylist';
 import { useEffect, useState } from 'react';
-import getPlaylists from '../firebase/getPlaylists';
+import getUserPlaylists from '../firebase/getUserPlaylists';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -16,7 +16,7 @@ const Sidemenu = ({ name, image }) => {
   const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
-    getPlaylists(user).then((playlists) => {
+    getUserPlaylists(user).then((playlists) => {
       setPlaylists(playlists);
     });
   }, [user]);
@@ -62,8 +62,9 @@ const Sidemenu = ({ name, image }) => {
         {playlists?.map((playlist) => {
           return (
             <SidemenuPlaylist
-              name={playlist.name}
               key={playlist.id}
+              name={playlist.name}
+              image={playlist.image}
               id={playlist.id}
             />
           );

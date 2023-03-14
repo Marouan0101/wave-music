@@ -10,6 +10,9 @@ import getUserPlaylists from '../firebase/getUserPlaylists';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { db, playlistsRef } from '../firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
+import CreatePlaylist from './CreatePlaylist';
 
 const Sidemenu = ({ name, image }) => {
   const [playlists, setPlaylists] = useState(null);
@@ -44,21 +47,13 @@ const Sidemenu = ({ name, image }) => {
         <SidemenuLink text='Liked tracks' icon={HeartIcon.src} url='/1' />
         <SidemenuLink text='Playlists' icon={PlaylistIcon.src} url='/2' />
 
-        {/* Create playlist button */}
-        <div className='rounded-md bg-gradient-to-br from-primary to-secondary p-[0.125rem]'>
-          <Link href='/' className='capitalize'>
-            <div className='flex cursor-pointer justify-between rounded-md bg-background p-2 transition-all hover:bg-transparent'>
-              <div>Create playlist</div>
-              <PlusIcon className='w-5' />
-            </div>
-          </Link>
-        </div>
+        <CreatePlaylist user={user} />
       </div>
 
       <hr className='my-3 mb-6 border-grey-dark' />
 
       {/* Playlists */}
-      <div className='space-y-2'>
+      <div className='overflow-y-aut space-y-2'>
         {playlists?.map((playlist) => {
           return (
             <SidemenuPlaylist

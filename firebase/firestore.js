@@ -5,14 +5,14 @@ import { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 // init firebase app
-initializeApp(config);
+const app = initializeApp(config);
 
 // init services
-const db = getFirestore();
+const db = getFirestore(app);
 
 // collection ref
 const albumsRef = collection(db, 'albums');
 const playlistsRef = collection(db, 'playlists');
 const tracksRef = collection(db, 'tracks');
 
-export { albumsRef, playlistsRef, tracksRef };
+export { db, albumsRef, playlistsRef, tracksRef };

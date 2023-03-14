@@ -1,0 +1,18 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_185_568" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+<path d="M23 13.1V17.5C23 21.35 20.8 23 17.5 23H6.5C3.2 23 1 21.35 1 17.5V13.1C1 10.185 2.265 8.53498 4.3 7.90798C4.96 7.69898 5.697 7.59998 6.5 7.59998H17.5C18.303 7.59998 19.04 7.69898 19.7 7.90798C21.735 8.53498 23 10.185 23 13.1Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19.6998 6.5V7.908C19.0398 7.699 18.3028 7.6 17.4998 7.6H6.4998C5.6968 7.6 4.9598 7.699 4.2998 7.908V6.5C4.2998 5.29 5.2898 4.3 6.4998 4.3H17.4998C18.7098 4.3 19.6998 5.29 19.6998 6.5ZM16.3998 2.661V4.3H7.5998V2.661C7.5998 1.748 8.3478 1 9.2608 1H14.7388C15.6518 1 16.3998 1.748 16.3998 2.661Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.77671 20.195C9.1618 20.195 9.53112 20.042 9.80343 19.7697C10.0757 19.4974 10.2287 19.1281 10.2287 18.743C10.2287 18.3579 10.0757 17.9886 9.80343 17.7163C9.53112 17.444 9.1618 17.291 8.77671 17.291C8.39161 17.291 8.02229 17.444 7.74999 17.7163C7.47768 17.9886 7.32471 18.3579 7.32471 18.743C7.32471 19.1281 7.47768 19.4974 7.74999 19.7697C8.02229 20.042 8.39161 20.195 8.77671 20.195Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.575 17.775V12.088C15.575 10.878 14.816 10.702 14.046 10.922L11.131 11.714C10.603 11.857 10.24 12.275 10.24 12.88V18.743" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.24 14.585L15.575 13.133M14.123 19.227C14.5081 19.227 14.8774 19.074 15.1497 18.8017C15.422 18.5294 15.575 18.1601 15.575 17.775C15.575 17.3899 15.422 17.0206 15.1497 16.7483C14.8774 16.476 14.5081 16.323 14.123 16.323C13.7379 16.323 13.3686 16.476 13.0963 16.7483C12.824 17.0206 12.671 17.3899 12.671 17.775C12.671 18.1601 12.824 18.5294 13.0963 18.8017C13.3686 19.074 13.7379 19.227 14.123 19.227Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</mask>
+<g mask="url(#mask0_185_568)">
+<rect width="24" height="24" fill="url(#paint0_linear_185_568)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_185_568" x1="3.81818" y1="4.36364" x2="21.8182" y2="21.8182" gradientUnits="userSpaceOnUse">
+<stop stop-color="#46C0FF"/>
+<stop offset="1" stop-color="#C042D4"/>
+</linearGradient>
+</defs>
+</svg>

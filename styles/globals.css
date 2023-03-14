@@ -4,13 +4,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
 
 * {
-   font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 body {
-    @apply bg-background text-white;
+  @apply bg-background text-white;
 }
 
 .sidemenu_link--active a {
-    @apply text-primary
+  @apply text-primary;
+}
+
+.sidemenu_link--active img {
+  @apply opacity-100;
 }

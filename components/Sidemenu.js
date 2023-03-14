@@ -1,56 +1,76 @@
-import SidemenuLink from "./SidemenuLink"
-import {HomeIcon, PlusIcon, HeartIcon, MusicalNoteIcon} from '@heroicons/react/24/solid'
-import Link from "next/link"
-import SidemenuPlaylist from "./SidemenuPlaylist"
+import SidemenuLink from './SidemenuLink';
+import { PlusIcon } from '@heroicons/react/24/solid';
+import HomeIcon from '../public/HomeIcon.svg';
+import HeartIcon from '../public/HeartIcon.svg';
+import PlaylistIcon from '../public/PlaylistIcon.svg';
+import Link from 'next/link';
+import SidemenuPlaylist from './SidemenuPlaylist';
+import { useEffect, useState } from 'react';
+import getPlaylists from '../firebase/getPlaylists';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-const Sidemenu = ({name, image}) => {
+const Sidemenu = ({ name, image }) => {
+  const [playlists, setPlaylists] = useState(null);
+  const [user, loading] = useAuthState(auth);
+
+  useEffect(() => {
+    getPlaylists(user).then((playlists) => {
+      setPlaylists(playlists);
+    });
+  }, [user]);
+
+  console.log('User', user);
+  console.log('Playlists', playlists);
   return (
-    <div className='absolute px-3 border-r border-grey-dark top-0 left-0 w-56 h-full'>
-      
+    <div className='absolute top-0 left-0 h-full w-56 border-r border-grey-dark px-3'>
       {/* Profile */}
-      
-      <div className='flex py-3  items-center space-x-3 hover:text-primary transition-all ease-out cursor-pointer'>
-          <div className="w-12 h-12  relative">
 
-            <div className="bg-gradient-to-br from-primary to-secondary rounded-full w-[3.125rem] h-[3.125rem] -translate-x-[0.0625rem] -translate-y-[0.0625rem] absolute"></div>
-            <img className="absolute rounded-full" src={image} />
+      <Link href='/profile'>
+        <div className='flex cursor-pointer  items-center space-x-3 py-3 transition-all ease-out hover:text-primary'>
+          <div className='relative h-12  w-12'>
+            <div className='absolute h-[3.125rem] w-[3.125rem] -translate-x-[0.0625rem] -translate-y-[0.0625rem] rounded-full bg-gradient-to-br from-primary to-secondary'></div>
+            <img className='absolute rounded-full' src={image} />
           </div>
 
-          <div className="font-semibold text-xl">{name}</div>
-      </div>
-  
-      
+          <div className='text-xl font-semibold'>{name}</div>
+        </div>
+      </Link>
+
       {/* Sidebar links */}
-      <div className="py-4 space-y-6 font-semibold ">
-        <SidemenuLink text="Home" Icon={HomeIcon} url="/" />
-        <SidemenuLink text="Liked tracks" Icon={HeartIcon} url="/1" />
-        <SidemenuLink text="Playlists" Icon={MusicalNoteIcon} url="/1" />
+      <div className='space-y-6 py-4 font-semibold '>
+        <SidemenuLink text='Home' icon={HomeIcon.src} url='/' />
+        <SidemenuLink text='Liked tracks' icon={HeartIcon.src} url='/1' />
+        <SidemenuLink text='Playlists' icon={PlaylistIcon.src} url='/2' />
 
         {/* Create playlist button */}
-        <div className="p-[0.125rem] rounded-md bg-gradient-to-br from-primary to-secondary">
-          <Link href='/' className="capitalize">
-            <div className="flex p-2 rounded-md justify-between bg-background hover:bg-transparent cursor-pointer transition-all">
-              <div>
-              Create playlist
-              </div>
-            <PlusIcon className="w-5" />
+        <div className='rounded-md bg-gradient-to-br from-primary to-secondary p-[0.125rem]'>
+          <Link href='/' className='capitalize'>
+            <div className='flex cursor-pointer justify-between rounded-md bg-background p-2 transition-all hover:bg-transparent'>
+              <div>Create playlist</div>
+              <PlusIcon className='w-5' />
             </div>
           </Link>
         </div>
       </div>
 
-      <hr className="border-grey-dark mb-6 my-3" />
+      <hr className='my-3 mb-6 border-grey-dark' />
 
       {/* Playlists */}
-      <div className="space-y-2">
-      <SidemenuPlaylist />
-      <SidemenuPlaylist />
-      <SidemenuPlaylist />
-
+      <div className='space-y-2'>
+        {playlists?.map((playlist) => {
+          return (
+            <SidemenuPlaylist
+              name={playlist.name}
+              key={playlist.id}
+              id={playlist.id}
+            />
+          );
+        })}
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Sidemenu
+export default Sidemenu;

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import ProfileSection from '../components/ProfileSection';
+import CardLarge from '../components/CardLarge';
 import { auth } from '../firebase/auth';
 import getUserTracks from '../firebase/getUserTracks';
+import CardSmall from '../components/CardSmall';
 
 const profile = () => {
   const [user, loading] = useAuthState(auth);
@@ -20,7 +22,10 @@ const profile = () => {
     return (
       <div className='space-y-10 p-4'>
         <div className='flex items-center space-x-4'>
-          <img src={user.photoURL} className='w-32 rounded-full' />
+          <div className='relative h-32 w-32'>
+            <div className='absolute left-1/2 top-1/2 -z-10 h-28 w-28 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-primary to-secondary blur-md'></div>
+            <img src={user.photoURL} className='h-full w-full rounded-xl' />
+          </div>
           <div>
             <div className='text-5xl font-bold'>{user.displayName}</div>
           </div>
@@ -28,15 +33,15 @@ const profile = () => {
 
         {/* Tracks section */}
         <div className='space-y-2'>
-          <div className='text-lg font-semibold'>Tracks</div>
-          <div className='grid grid-cols-6'>
+          <h2 className='text-lg font-semibold'>Tracks</h2>
+          <div className='flex space-x-4'>
             {/* Track */}
             {tracks?.map((track) => {
               return (
-                <div className=' col-span-1 items-center rounded-lg bg-background-light p-3 pb-0'>
-                  <img src={track.image} className='w-full rounded-md' />
-                  <div className='py-2 text-center'>{track.name}</div>
-                </div>
+                <>
+                  <CardLarge key={track.id} track={track} />
+                  <CardSmall track={track} />
+                </>
               );
             })}
           </div>

@@ -37,12 +37,7 @@ const profile = () => {
           <div className='flex space-x-4'>
             {/* Track */}
             {tracks?.map((track) => {
-              return (
-                <>
-                  <CardLarge key={track.id} track={track} />
-                  <CardSmall track={track} />
-                </>
-              );
+              return <CardLarge key={track.id} track={track} />;
             })}
           </div>
         </div>

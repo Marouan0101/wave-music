@@ -16,14 +16,14 @@ const CreatePlaylist = ({ user }) => {
         uid: user.uid,
       },
     });
-    router.push(`/playlist/${playlistDoc.id}`);
+    router.push(`/playlist?id=${playlistDoc.id}`);
   };
 
   return (
     <div className='rounded-md bg-gradient-to-br from-primary to-secondary p-[0.125rem]'>
       <div
         onClick={addPlaylist}
-        className='flex cursor-pointer justify-between rounded-md bg-background p-2 transition-all hover:bg-transparent'
+        className='flex cursor-pointer justify-between rounded-md bg-background p-2 transition-all duration-300 hover:bg-transparent'
       >
         <div>Create playlist</div>
         <PlusIcon className='w-5' />

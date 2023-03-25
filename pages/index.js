@@ -2,8 +2,6 @@ import Head from 'next/head';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/router';
 import { auth } from '../firebase/auth';
-import getAlbums from '../firebase/getAlbums';
-import { useState } from 'react';
 import 'firebase/firestore';
 
 export default function Home() {

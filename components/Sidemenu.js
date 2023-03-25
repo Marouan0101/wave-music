@@ -11,7 +11,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { db, playlistsRef } from '../firebase/firestore';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, onSnapshot, doc } from 'firebase/firestore';
 import CreatePlaylist from './CreatePlaylist';
 
 const Sidemenu = ({ name, image }) => {
@@ -22,10 +22,20 @@ const Sidemenu = ({ name, image }) => {
     getUserPlaylists(user).then((playlists) => {
       setPlaylists(playlists);
     });
+
+    const unsubscribe = onSnapshot(playlistsRef, (snapshot) => {
+      const updatedPlaylists = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setPlaylists(updatedPlaylists);
+    });
+
+    return unsubscribe;
   }, [user]);
 
-  console.log('User', user);
-  console.log('Playlists', playlists);
+  //console.log('User', user);
+  //console.log('Playlists', playlists);
   return (
     <div className='absolute top-0 left-0 h-full w-56 border-r border-grey-dark px-3'>
       {/* Profile */}

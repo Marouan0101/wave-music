@@ -6,7 +6,7 @@ import { auth } from '../firebase/auth';
 import getUserTracks from '../firebase/getUserTracks';
 import CardSmall from '../components/CardSmall';
 
-const profile = () => {
+const Profile = () => {
   const [user, loading] = useAuthState(auth);
   const [tracks, setTracks] = useState(null);
   if (loading) {
@@ -49,4 +49,4 @@ const profile = () => {
   return;
 };
 
-export default profile;
+export default Profile;

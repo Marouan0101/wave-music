@@ -14,5 +14,6 @@ const db = getFirestore(app);
 const albumsRef = collection(db, 'albums');
 const playlistsRef = collection(db, 'playlists');
 const tracksRef = collection(db, 'tracks');
+const playerRef = collection(db, 'player');
 
-export { db, albumsRef, playlistsRef, tracksRef };
+export { db, albumsRef, playlistsRef, tracksRef, playerRef };

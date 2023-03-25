@@ -3,10 +3,11 @@ import React from 'react';
 
 const CardSmall = ({ track }) => {
   const audio = new Audio(track.source);
+
   return (
-    <div className='component flex h-12 w-[12.75rem] items-center space-x-1 rounded-md bg-background-light shadow-md transition-all hover:shadow-2xl'>
+    <div className='component flex h-12 w-[12.75rem] items-center space-x-1 rounded-md bg-background-light shadow-md transition-all hover:scale-105 hover:shadow-2xl'>
       <div className='relative'>
-        <img src={track.image} className='h-12 w-12 rounded-sm' />
+        <img src={track.image} className='h-12 w-12 rounded-sm object-cover' />
 
         <div
           onClick={() => audio.play()}

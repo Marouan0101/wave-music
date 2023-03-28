@@ -34,10 +34,16 @@ const Profile = () => {
         {/* Tracks section */}
         <div className='space-y-2'>
           <h2 className='text-lg font-semibold'>Tracks</h2>
-          <div className='flex space-x-4'>
+          <div className='grid grid-cols-5 gap-4'>
             {/* Track */}
             {tracks?.map((track) => {
-              return <CardLarge key={track.id} track={track} />;
+              return (
+                <>
+                  <div className='col-span-1'>
+                    <CardLarge key={track.id} track={track} />
+                  </div>
+                </>
+              );
             })}
           </div>
         </div>

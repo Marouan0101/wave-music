@@ -12,13 +12,13 @@ const Profile = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  if (user) {
-    useEffect(() => {
-      getUserTracks(user).then((tracks) => {
-        setTracks(tracks);
-      });
-    }, [user]);
+  useEffect(() => {
+    getUserTracks(user).then((tracks) => {
+      setTracks(tracks);
+    });
+  }, [user]);
 
+  if (user) {
     return (
       <div className='space-y-10 p-4'>
         <div className='flex items-center space-x-4'>

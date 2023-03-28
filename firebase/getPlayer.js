@@ -31,4 +31,12 @@ const playTrack = async (track) => {
   });
 };
 
-export { getState, getQueue, playTrack };
+const addTrackToQueue = async (track) => {
+  await getQueue().then(async (queue) => {
+    await updateDoc(doc(db, 'player/queue'), {
+      tracks: [...queue.tracks, track],
+    });
+  });
+};
+
+export { getState, getQueue, playTrack, addTrackToQueue };

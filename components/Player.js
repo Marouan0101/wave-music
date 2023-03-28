@@ -12,6 +12,10 @@ import {
   IoPlaySkipBack,
   IoRepeatOutline,
 } from 'react-icons/io5';
+import { HiOutlineQueueList } from 'react-icons/hi2';
+import { RxDotsHorizontal } from 'react-icons/rx';
+import Queue from './Queue';
+import TrackOptions from './TrackOptions';
 
 const Player = () => {
   const [user, loading] = useAuthState(auth);
@@ -33,15 +37,11 @@ const Player = () => {
     });
   }, [user]);
 
-  console.log('Player state', state);
-  console.log('Player queue', queue);
-
   if (!queue?.currentTrack) {
     return;
   }
-
   return (
-    <div className='fixed bottom-4 left-1/2 z-50 h-16 w-11/12 -translate-x-1/2 overflow-hidden rounded-xl bg-black  opacity-70 transition-all duration-300 hover:opacity-100'>
+    <div className='fixed bottom-4 left-1/2 z-50 h-16 w-11/12 -translate-x-1/2 rounded-xl bg-black transition-all duration-300'>
       {/* Progressbar */}
       <div></div>
 
@@ -50,19 +50,26 @@ const Player = () => {
         <div className='col-span-1 flex items-center'>
           <img
             src={queue?.currentTrack.image}
-            className='h-16 w-16 object-cover'
+            className='h-16 w-16 rounded-l-xl  object-cover'
           />
 
           <div className='space-y-1 px-2'>
             <div className='font-semibold'>{queue?.currentTrack.name}</div>
 
             <div className='flex space-x-1'>
-              {queue?.currentTrack.artists.map((artist) => {
-                return (
-                  <div className='text-sm text-grey-light' key={artist.uid}>
-                    {artist.name},
-                  </div>
-                );
+              {queue?.currentTrack.artists.map((artist, i) => {
+                if (i + 1 === queue.currentTrack.artists.length) {
+                  return (
+                    <div className='text-sm text-grey-light' key={artist.uid}>
+                      {artist.name}
+                    </div>
+                  );
+                } else
+                  return (
+                    <div className='text-sm text-grey-light' key={artist.uid}>
+                      {artist.name},
+                    </div>
+                  );
               })}
             </div>
           </div>
@@ -84,7 +91,10 @@ const Player = () => {
         </div>
 
         {/* Right */}
-        <div className='col-span-1'></div>
+        <div className='col-span-1 flex items-center justify-end space-x-4 pr-4'>
+          <Queue tracks={queue.tracks} currentTrack={queue.currentTrack} />
+          <TrackOptions track={queue.currentTrack} />
+        </div>
       </div>
     </div>
   );

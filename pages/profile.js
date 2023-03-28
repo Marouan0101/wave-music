@@ -9,14 +9,15 @@ import CardSmall from '../components/CardSmall';
 const Profile = () => {
   const [user, loading] = useAuthState(auth);
   const [tracks, setTracks] = useState(null);
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   useEffect(() => {
     getUserTracks(user).then((tracks) => {
       setTracks(tracks);
     });
   }, [user]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (user) {
     return (

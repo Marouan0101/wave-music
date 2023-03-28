@@ -6,7 +6,7 @@ const CardLarge = ({ track }) => {
   return (
     <div className='component items-center rounded-lg bg-background-light p-3  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl'>
       <div className='relative'>
-        <img src={track.image} className='h-48 w-48 rounded-md object-cover' />
+        <img src={track.image} className='rounded-md object-cover' />
 
         <div
           onClick={() => playTrack(track)}

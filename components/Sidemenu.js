@@ -8,15 +8,17 @@ import SidemenuPlaylist from './SidemenuPlaylist';
 import { useEffect, useState } from 'react';
 import getUserPlaylists from '../firebase/getUserPlaylists';
 import { signOut } from 'firebase/auth';
-import { auth } from '../firebase/auth';
+import { auth, provider } from '../firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { db, playlistsRef } from '../firebase/firestore';
-import { collection, addDoc, onSnapshot, doc } from 'firebase/firestore';
+import { playlistsRef } from '../firebase/firestore';
+import { onSnapshot } from 'firebase/firestore';
 import CreatePlaylist from './CreatePlaylist';
+import { AiFillSetting } from 'react-icons/ai';
 
 const Sidemenu = ({ name, image }) => {
   const [playlists, setPlaylists] = useState(null);
   const [user, loading] = useAuthState(auth);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   useEffect(() => {
     getUserPlaylists(user).then((playlists) => {
@@ -39,17 +41,38 @@ const Sidemenu = ({ name, image }) => {
   return (
     <div className='absolute top-0 left-0 h-full w-56 border-r border-grey-dark px-3'>
       {/* Profile */}
+      <div>
+        <Link id='sidemenu-profile' href='/profile'>
+          <div className='flex cursor-pointer  items-center space-x-3 py-3 transition-all duration-300 ease-out hover:text-primary'>
+            <div className='relative h-12 w-12'>
+              <div className='absolute h-[3.125rem] w-[3.125rem] -translate-x-[0.0625rem] -translate-y-[0.0625rem] rounded-full bg-gradient-to-br from-primary to-secondary'></div>
+              <img className='absolute rounded-full' src={image} />
 
-      <Link href='/profile'>
-        <div className='flex cursor-pointer  items-center space-x-3 py-3 transition-all ease-out hover:text-primary'>
-          <div className='relative h-12  w-12'>
-            <div className='absolute h-[3.125rem] w-[3.125rem] -translate-x-[0.0625rem] -translate-y-[0.0625rem] rounded-full bg-gradient-to-br from-primary to-secondary'></div>
-            <img className='absolute rounded-full' src={image} />
+              <AiFillSetting
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className='icon-settings absolute right-1/2 bottom-1/2 z-50 h-5 w-5 translate-x-1/2 translate-y-1/2 text-grey-light opacity-0 transition-all duration-200'
+              />
+            </div>
+
+            <div className='text-xl font-semibold'>{name}</div>
           </div>
+        </Link>
 
-          <div className='text-xl font-semibold'>{name}</div>
-        </div>
-      </Link>
+        {isProfileOpen && (
+          <div className='absolute z-50 space-y-1 rounded-lg bg-background-light p-2 text-sm shadow-lg shadow-black'>
+            <div className='cursor-pointer hover:underline'>Account</div>
+
+            <div className=' cursor-pointer hover:underline'>Preferences</div>
+
+            <div
+              onClick={async () => await signOut(auth)}
+              className='cursor-pointer hover:underline'
+            >
+              Log out
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Sidebar links */}
       <div className='space-y-6 py-4 font-semibold '>

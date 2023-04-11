@@ -22,3 +22,11 @@ body {
 .component:hover .component-play {
   @apply opacity-100;
 }
+
+#sidemenu-profile:hover .icon-settings {
+  @apply opacity-100;
+}
+
+#sidemenu-profile:hover img {
+  @apply blur-sm;
+}

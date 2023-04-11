@@ -41,7 +41,7 @@ const Player = () => {
     return;
   }
   return (
-    <div className='fixed bottom-4 left-1/2 z-50 h-16 w-11/12 -translate-x-1/2 rounded-xl bg-black transition-all duration-300'>
+    <div className='fixed bottom-4 left-1/2 z-50 h-16 w-11/12 -translate-x-1/2 rounded-xl bg-black shadow-xl transition-all duration-300'>
       {/* Progressbar */}
       <div></div>
 

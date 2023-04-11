@@ -18,6 +18,7 @@ export default function Home() {
 
   //console.log(user);
 
+  console.log(user);
   return (
     <>
       <Head>

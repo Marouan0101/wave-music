@@ -5,10 +5,13 @@ import CardLarge from '../components/CardLarge';
 import { auth } from '../firebase/auth';
 import getUserTracks from '../firebase/getUserTracks';
 import CardSmall from '../components/CardSmall';
+import { useRouter } from 'next/router';
 
 const Profile = () => {
+  const router = useRouter();
   const [user, loading] = useAuthState(auth);
   const [tracks, setTracks] = useState(null);
+
   useEffect(() => {
     getUserTracks(user).then((tracks) => {
       setTracks(tracks);
@@ -17,6 +20,10 @@ const Profile = () => {
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    router.push('/login');
   }
 
   if (user) {
@@ -39,11 +46,9 @@ const Profile = () => {
             {/* Track */}
             {tracks?.map((track) => {
               return (
-                <>
-                  <div className='col-span-1'>
-                    <CardLarge key={track.id} track={track} />
-                  </div>
-                </>
+                <div key={track.id} className='col-span-1'>
+                  <CardLarge track={track} />
+                </div>
               );
             })}
           </div>

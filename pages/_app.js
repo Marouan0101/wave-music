@@ -6,21 +6,22 @@ import '../styles/globals.css';
 
 export default function App({ Component, pageProps }) {
   const [user, loading] = useAuthState(auth);
+
   if (loading) {
     return <div>Loading...</div>;
   }
-  if (user) {
+
+  if (!user) {
     return (
       <>
-        <Sidemenu name={user?.displayName} image={user?.photoURL} />
         <Component {...pageProps} />
-        <Player />
       </>
     );
   }
 
   return (
     <>
+      <Sidemenu name={user?.displayName} image={user?.photoURL} />
       <Component {...pageProps} />
       <Player />
     </>

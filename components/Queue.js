@@ -12,7 +12,7 @@ const Queue = ({ tracks, currentTrack }) => {
           onClick={() => setIsOpen(!isOpen)}
           className='h-6 w-6 cursor-pointer text-primary transition-all hover:scale-105 '
         />
-        <div className='absolute bottom-20 right-0 w-72 rounded-xl bg-black p-4'>
+        <div className='absolute bottom-20 right-0 w-72 rounded-xl bg-black p-4 shadow-xl'>
           <div className='text-center text-sm font-semibold text-primary'>
             {currentTrack.name}
           </div>

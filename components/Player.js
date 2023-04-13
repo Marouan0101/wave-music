@@ -41,7 +41,7 @@ const Player = () => {
     return;
   }
   return (
-    <div className='fixed bottom-4 left-1/2 z-50 h-16 w-11/12 -translate-x-1/2 rounded-xl bg-black shadow-xl transition-all duration-300'>
+    <div className='fixed bottom-4 left-1/2 z-50 h-16 w-11/12 -translate-x-1/2 rounded-xl bg-purple-dark shadow-xl transition-all duration-300'>
       {/* Progressbar */}
       <div></div>
 
@@ -83,7 +83,7 @@ const Player = () => {
           <IoPlaySkipBack className='h-7 w-7 cursor-pointer text-grey-light transition-all hover:scale-105 hover:text-white' />
 
           <div className='cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-1.5 transition-all hover:scale-105'>
-            <PlayIcon className='h-7 w-7 text-black' />
+            <PlayIcon className='h-7 w-7 text-purple-dark' />
           </div>
           <IoPlaySkipForward className='h-7 w-7 cursor-pointer text-grey-light transition-all hover:scale-105 hover:text-white' />
 

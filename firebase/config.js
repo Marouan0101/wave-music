@@ -1,12 +1,13 @@
 const config = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  apiKey: 'AIzaSyBvQfQHXAuPKbxO60hyp95GLECZcjfk0J4',
+  authDomain: 'wave-music-fd59a.firebaseapp.com',
+  databaseURL:
+    'https://wave-music-fd59a-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'wave-music-fd59a',
+  storageBucket: 'wave-music-fd59a.appspot.com',
+  messagingSenderId: '1040641155544',
+  appId: '1:1040641155544:web:dbc4a4c5c05b6944d812ad',
+  measurementId: 'G-LDNHTYYYDF',
 };
 
 export default config;

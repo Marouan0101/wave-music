@@ -11,6 +11,25 @@ body {
   @apply bg-background text-white;
 }
 
+/* width */
+::-webkit-scrollbar {
+  @apply w-3;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply rounded-full border-4 border-solid border-background bg-grey-dark;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+}
+
 .sidemenu_link--active a {
   @apply text-primary;
 }

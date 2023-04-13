@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from "react";
 import { TbFileUpload } from "react-icons/tb";
 import { BsFileEarmarkImage } from "react-icons/bs";
 import CardLarge from "../components/CardLarge";
@@ -7,9 +7,10 @@ import { auth } from "../firebase/auth";
 
 const CreateTrackModal = () => {
     const [user, loading] = useAuthState(auth);
+    const [imageFile, setImageFile] = useState(null);
 
     const previewTrack = {
-        image: null,
+        image: URL.createObjectURL(imageFile),
         name: null,
         artists: [
             {
@@ -17,6 +18,8 @@ const CreateTrackModal = () => {
             },
         ],
     };
+
+    console.log(imageFile);
     return (
         /* Body */
         <div className="absolute z-50 h-full w-[84%] bg-black/80">
@@ -25,6 +28,7 @@ const CreateTrackModal = () => {
                 <div>
                     <CardLarge track={previewTrack} />
                 </div>
+
                 {/* Input section */}
                 <div className="grid grid-cols-2 items-center gap-8">
                     {/* Song name inputfield */}
@@ -41,20 +45,41 @@ const CreateTrackModal = () => {
                     {/* Upload song button */}
                     <div className="col-span-1">
                         <div className="rounded-full bg-gradient-to-br from-primary to-secondary p-0.5 transition-all hover:scale-105">
-                            <div className="m-auto flex cursor-pointer items-center justify-between rounded-full bg-background-light py-2 px-4 transition-all duration-200 hover:bg-transparent">
+                            <label
+                                htmlFor="songFile"
+                                className="m-auto flex cursor-pointer items-center justify-between rounded-full bg-background-light py-2 px-4 transition-all duration-200 hover:bg-transparent"
+                            >
                                 <div>Song file</div>
                                 <TbFileUpload className="h-7 w-7" />
-                            </div>
+                            </label>
+                            <input
+                                type="file"
+                                id="songFile"
+                                className="hidden"
+                                accept="audio/*"
+                            />
                         </div>
                     </div>
 
                     {/* Image upload button */}
                     <div className="col-span-1">
                         <div className="rounded-full bg-gradient-to-br from-primary to-secondary p-0.5 transition-all hover:scale-105">
-                            <div className="m-auto flex cursor-pointer items-center justify-between rounded-full bg-background-light py-2 px-4 transition-all duration-200 hover:bg-transparent">
+                            <label
+                                htmlFor="coverFile"
+                                className="m-auto flex cursor-pointer items-center justify-between rounded-full bg-background-light py-2 px-4 transition-all duration-200 hover:bg-transparent"
+                            >
                                 <div>Cover</div>
                                 <BsFileEarmarkImage className="h-7 w-7" />
-                            </div>
+                            </label>
+                            <input
+                                onChange={(event) =>
+                                    setImageFile(event.target.files[0])
+                                }
+                                type="file"
+                                id="coverFile"
+                                className="hidden"
+                                accept="image/*"
+                            />
                         </div>
                     </div>
                 </div>
@@ -63,4 +88,4 @@ const CreateTrackModal = () => {
     );
 };
 
-export default CreateTrackModal
+export default CreateTrackModal;

@@ -16,7 +16,7 @@ const CreateTrackModal = () => {
 
     const previewTrack = {
         image: imageFile ? URL.createObjectURL(imageFile) : placeholderImage,
-        name: name || "Track title",
+        name: name || "Title",
         artists: [
             {
                 name: user?.displayName,

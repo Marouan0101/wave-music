@@ -44,14 +44,14 @@ const Sidemenu = ({ name, image }) => {
       <div>
         <Link id='sidemenu-profile' href='/profile'>
           <div className='flex cursor-pointer  items-center space-x-3 py-3 transition-all duration-300 ease-out hover:text-primary'>
-            <div className='relative h-12 w-12'>
+            <div
+              onClick={() => setIsProfileOpen(!isProfileOpen)}
+              className='relative h-12 w-12'
+            >
               <div className='absolute h-[3.125rem] w-[3.125rem] -translate-x-[0.0625rem] -translate-y-[0.0625rem] rounded-full bg-gradient-to-br from-primary to-secondary'></div>
               <img className='absolute rounded-full' src={image} />
 
-              <AiFillSetting
-                onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className='icon-settings absolute right-1/2 bottom-1/2 z-50 h-5 w-5 translate-x-1/2 translate-y-1/2 text-grey-light opacity-0 transition-all duration-200'
-              />
+              <AiFillSetting className='icon-settings absolute right-1/2 bottom-1/2 z-50 h-5 w-5 translate-x-1/2 translate-y-1/2 text-grey-light opacity-0 transition-all duration-200' />
             </div>
 
             <div className='text-xl font-semibold'>{name}</div>

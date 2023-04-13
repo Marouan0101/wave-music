@@ -1,5 +1,5 @@
 import 'firebase/auth';
-import { signInWithPopup } from 'firebase/auth';
+import { signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, provider } from '../firebase/auth';
@@ -9,7 +9,9 @@ const Login = () => {
   const [user, loading] = useAuthState(auth);
 
   const signIn = async () => {
-    const result = await signInWithPopup(auth, provider);
+    //const result = await signInWithPopup(auth, provider);
+    await signInWithRedirect(auth, provider);
+    const result = await getRedirectResult(auth);
     console.log(result.user);
   };
 

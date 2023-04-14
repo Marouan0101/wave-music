@@ -6,17 +6,20 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth";
 import placeholderImage from "../public/placeholderImage.jpg";
 import { PlayIcon } from "@heroicons/react/24/solid";
+import { playTrack } from "../firebase/getPlayer";
 
 const CreateTrackModal = () => {
     const [user, loading] = useAuthState(auth);
     const [imageFile, setImageFile] = useState(null);
     const [name, setName] = useState(null);
     const [collabs, setCollabs] = useState(null);
+    const [trackFile, setTrackFile] = useState(null);
 
     const previewTrack = {
         image: imageFile
             ? URL.createObjectURL(imageFile)
             : placeholderImage.src,
+        source: trackFile,
         name: name || "Title",
         artists: [
             {
@@ -28,20 +31,31 @@ const CreateTrackModal = () => {
         ],
     };
 
+    const handleFileUpload = (event) => {
+        const file = event.target.files[0];
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            setTrackFile(event.target.result);
+        };
+        reader.readAsDataURL(file);
+    };
+    console.log(trackFile);
+
     return (
         /* Body */
         <div className="absolute z-50 h-full w-[84%] bg-black/80">
-            <div className="m-auto mt-10  h-5/6 w-1/2 rounded-3xl bg-background p-8 shadow-lg">
+            <div className="m-auto mt-10   w-1/2 rounded-3xl bg-background p-8 shadow-lg">
                 {/* Preview section */}
-                <div className="component items-center rounded-lg bg-background-light p-3  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl">
+                <div className="component m-auto w-64 items-center overflow-hidden rounded-lg bg-background-light p-3  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl">
                     <div className="relative">
                         <img
                             src={previewTrack.image}
-                            className="rounded-md object-cover"
+                            className="m-auto h-56 w-56 rounded-md object-cover"
                         />
 
                         <div
-                            onClick={() => playTrack(track)}
+                            onClick={() => playTrack(previewTrack)}
                             className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
                         >
                             <PlayIcon className="h-8 w-8 text-white" />
@@ -51,7 +65,9 @@ const CreateTrackModal = () => {
                         <div className="text-base font-semibold">
                             {previewTrack.name}
                         </div>
-                        <div className="text-sm font-light text-grey-light">
+
+                        {/* artist names */}
+                        <div className="flex justify-center space-x-2 text-sm font-light text-grey-light">
                             {previewTrack.artists.map((artist) => {
                                 return <div>{artist.name}</div>;
                             })}
@@ -84,7 +100,7 @@ const CreateTrackModal = () => {
                         />
                     </div>
 
-                    {/* Upload song button */}
+                    {/* Upload track button */}
                     <div className="col-span-1">
                         <div className="rounded-full bg-gradient-to-br from-primary to-secondary p-0.5 transition-all hover:scale-105">
                             <label
@@ -95,6 +111,7 @@ const CreateTrackModal = () => {
                                 <TbFileUpload className="h-7 w-7" />
                             </label>
                             <input
+                                onChange={handleFileUpload}
                                 type="file"
                                 id="songFile"
                                 className="hidden"

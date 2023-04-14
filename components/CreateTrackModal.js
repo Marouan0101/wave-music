@@ -31,7 +31,7 @@ const CreateTrackModal = () => {
         audioElement.current.play();
     };*/
 
-    const pauseAudio = () => {
+    const audioControl = () => {
         if (audioElement.current.paused) {
             audioElement.current.play();
         } else {
@@ -69,7 +69,7 @@ const CreateTrackModal = () => {
                             />
                             <audio ref={audioElement} />
                             <div
-                                onClick={() => pauseAudio(previewTrack)}
+                                onClick={() => audioControl(previewTrack)}
                                 className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
                             >
                                 <PlayIcon className="h-8 w-8 text-white" />

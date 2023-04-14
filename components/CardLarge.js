@@ -5,13 +5,9 @@ import { playTrack } from '../firebase/getPlayer';
 
 const CardLarge = ({ track }) => {
   return (
-    //Fix cord large
-      <div className="component h-full items-center rounded-lg bg-background-light p-3  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl">
-          <div className="relative h-full">
-              <img
-                  src={track?.image}
-                  className="h-full rounded-md object-cover"
-              />
+      <div className="component items-center rounded-lg bg-background-light p-3  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl">
+          <div className="relative">
+              <img src={track?.image} className="rounded-md object-cover" />
 
               <div
                   onClick={() => playTrack(track)}

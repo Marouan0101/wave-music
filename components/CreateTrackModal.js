@@ -16,20 +16,20 @@ const CreateTrackModal = () => {
     const [trackFile, setTrackFile] = useState(null);
     const audioElement = useRef(null);
 
-    useEffect(() => {
+    /*useEffect(() => {
         return () => {
             pauseAudio();
         };
-    }, []);
+    }, []);*/
 
     const handleFileUpload = (event) => {
         setTrackFile(event.target.files[0]);
         audioElement.current.src = URL.createObjectURL(event.target.files[0]);
     };
 
-    const playAudio = () => {
+    /*const playAudio = () => {
         audioElement.current.play();
-    };
+    };*/
 
     const pauseAudio = () => {
         if (audioElement.current.paused) {

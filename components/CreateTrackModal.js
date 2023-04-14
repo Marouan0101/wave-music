@@ -5,6 +5,7 @@ import CardLarge from "../components/CardLarge";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth";
 import placeholderImage from "../public/placeholderImage.jpg";
+import { PlayIcon } from "@heroicons/react/24/solid";
 
 const CreateTrackModal = () => {
     const [user, loading] = useAuthState(auth);
@@ -27,15 +28,35 @@ const CreateTrackModal = () => {
         ],
     };
 
-    
-
     return (
         /* Body */
         <div className="absolute z-50 h-full w-[84%] bg-black/80">
             <div className="m-auto mt-10  h-5/6 w-1/2 rounded-3xl bg-background p-8 shadow-lg">
                 {/* Preview section */}
-                <div className="m-auto h-64 w-64">
-                    <CardLarge track={previewTrack} />
+                <div className="component items-center rounded-lg bg-background-light p-3  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl">
+                    <div className="relative">
+                        <img
+                            src={previewTrack.image}
+                            className="rounded-md object-cover"
+                        />
+
+                        <div
+                            onClick={() => playTrack(track)}
+                            className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                        >
+                            <PlayIcon className="h-8 w-8 text-white" />
+                        </div>
+                    </div>
+                    <div className="py-2 text-center">
+                        <div className="text-base font-semibold">
+                            {previewTrack.name}
+                        </div>
+                        <div className="text-sm font-light text-grey-light">
+                            {previewTrack.artists.map((artist) => {
+                                return <div>{artist.name}</div>;
+                            })}
+                        </div>
+                    </div>
                 </div>
 
                 {/* Input section */}

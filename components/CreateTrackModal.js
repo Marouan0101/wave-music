@@ -90,7 +90,11 @@ const CreateTrackModal = () => {
                             {/* artist names */}
                             <div className="flex justify-center space-x-2 text-sm font-light text-grey-light">
                                 {previewTrack.artists.map((artist) => {
-                                    return <div>{artist.name}</div>;
+                                    return (
+                                        <div key={artist.uid}>
+                                            {artist.name}
+                                        </div>
+                                    );
                                 })}
                             </div>
                         </div>

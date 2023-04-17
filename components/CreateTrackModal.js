@@ -7,8 +7,9 @@ import { auth } from "../firebase/auth";
 import placeholderImage from "../public/placeholderImage.jpg";
 import { PauseIcon, PlayIcon } from "@heroicons/react/24/solid";
 import { playTrack } from "../firebase/getPlayer";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/firestore";
+
 
 const CreateTrackModal = () => {
     const [user, loading] = useAuthState(auth);
@@ -19,6 +20,8 @@ const CreateTrackModal = () => {
     const audioElement = useRef(null);
     const [states, setStates] = useState();
     const [queue, setQueue] = useState();
+    const [audio, setAudio] = useState(new Audio());
+
 
     useEffect(() => {
         // update the state every time the state document changes
@@ -31,6 +34,23 @@ const CreateTrackModal = () => {
             setQueue(snapshot.data());
         });
     }, [user]);
+
+
+    const handlePlay = async () => {
+        audio.play();
+
+        await updateDoc(doc(db, "player/states"), {
+            isPlaying: true,
+        });
+    };
+
+    const handlePause = async () => {
+        audio.pause();
+
+        await updateDoc(doc(db, "player/states"), {
+            isPlaying: false,
+        });
+    };
 
     const handleFileUpload = (event) => {
         setTrackFile(event.target.files[0]);
@@ -66,20 +86,25 @@ const CreateTrackModal = () => {
                                 className="m-auto h-56 w-56 rounded-md object-cover"
                             />
 
-                            {states.isPlaying ? (
+                            {states && states.isPlaying ? (
                                 <div
-                                    onClick={() => playTrack(previewTrack)}
+                                onClick={() =>{playTrack(previewTrack); handlePause();
+
+                                } }
+                                className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                            >
+                                <PauseIcon className="h-8 w-8 text-white" />
+                            </div>
+                            ) : (
+                                <div
+                                    onClick={() =>{playTrack(previewTrack); handlePlay();
+
+                                    } }
                                     className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
                                 >
                                     <PlayIcon className="h-8 w-8 text-white" />
                                 </div>
-                            ) : (
-                                <div
-                                    /* onClick={() => playTrack(previewTrack)} */
-                                    className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
-                                >
-                                    <PauseIcon className="h-8 w-8 text-white" />
-                                </div>
+                                
                             )}
                         </div>
                         <div className="py-2 text-center">

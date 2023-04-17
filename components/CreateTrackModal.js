@@ -5,8 +5,10 @@ import CardLarge from "../components/CardLarge";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth";
 import placeholderImage from "../public/placeholderImage.jpg";
-import { PlayIcon } from "@heroicons/react/24/solid";
+import { PauseIcon, PlayIcon } from "@heroicons/react/24/solid";
 import { playTrack } from "../firebase/getPlayer";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase/firestore";
 
 const CreateTrackModal = () => {
     const [user, loading] = useAuthState(auth);
@@ -15,35 +17,31 @@ const CreateTrackModal = () => {
     const [collabs, setCollabs] = useState(null);
     const [trackFile, setTrackFile] = useState(null);
     const audioElement = useRef(null);
+    const [states, setStates] = useState();
+    const [queue, setQueue] = useState();
 
-    /*useEffect(() => {
-        return () => {
-            pauseAudio();
-        };
-    }, []);*/
+    useEffect(() => {
+        // update the state every time the state document changes
+        onSnapshot(doc(db, "player", "states"), (snapshot) => {
+            setStates(snapshot.data());
+        });
+
+        // update the 'queue' state every time the queue document changes
+        onSnapshot(doc(db, "player", "queue"), (snapshot) => {
+            setQueue(snapshot.data());
+        });
+    }, [user]);
 
     const handleFileUpload = (event) => {
         setTrackFile(event.target.files[0]);
-        audioElement.current.src = URL.createObjectURL(event.target.files[0]);
-    };
-
-    /*const playAudio = () => {
-        audioElement.current.play();
-    };*/
-
-    const audioControl = () => {
-        if (audioElement.current.paused) {
-            audioElement.current.play();
-        } else {
-            audioElement.current.pause();
-        }
+        //audioElement.current.src = URL.createObjectURL(event.target.files[0]);
     };
 
     const previewTrack = {
         image: imageFile
             ? URL.createObjectURL(imageFile)
             : placeholderImage.src,
-        source: trackFile,
+        source: trackFile ? URL.createObjectURL(trackFile) : null,
         name: name || "Title",
         artists: [
             {
@@ -54,7 +52,7 @@ const CreateTrackModal = () => {
             },
         ],
     };
-    console.log(trackFile);
+
     return (
         /* Body */
         <>
@@ -67,13 +65,22 @@ const CreateTrackModal = () => {
                                 src={previewTrack.image}
                                 className="m-auto h-56 w-56 rounded-md object-cover"
                             />
-                            <audio ref={audioElement} />
-                            <div
-                                onClick={() => audioControl(previewTrack)}
-                                className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
-                            >
-                                <PlayIcon className="h-8 w-8 text-white" />
-                            </div>
+
+                            {states.isPlaying ? (
+                                <div
+                                    onClick={() => playTrack(previewTrack)}
+                                    className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                                >
+                                    <PlayIcon className="h-8 w-8 text-white" />
+                                </div>
+                            ) : (
+                                <div
+                                    /* onClick={() => playTrack(previewTrack)} */
+                                    className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                                >
+                                    <PauseIcon className="h-8 w-8 text-white" />
+                                </div>
+                            )}
                         </div>
                         <div className="py-2 text-center">
                             <div className="text-base font-semibold">

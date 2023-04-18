@@ -10,7 +10,7 @@ const getUserTracks = async (user) => {
       snapshot.docs.forEach((doc) => {
         doc.data().artists.map((artist) => {
           if (artist.uid == user.uid) {
-            tracks.push({ ...doc.data(), id: doc.id });
+            tracks.push(doc.data());
           }
         });
       });

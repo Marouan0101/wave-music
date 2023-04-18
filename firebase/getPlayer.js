@@ -26,9 +26,8 @@ const getState = async () => {
 };
 
 const playTrack = async (track) => {
-
-  await updateDoc(doc(db, "player/queue"), {
-      currentTrack: track,
+  await updateDoc(doc(db, 'player/queue'), {
+    currentTrack: track,
   });
 };
 

@@ -16,4 +16,4 @@ const playlistsRef = collection(db, 'playlists');
 const tracksRef = collection(db, 'tracks');
 const playerRef = collection(db, 'player');
 
-export { db, albumsRef, playlistsRef, tracksRef, playerRef };
+export { db, albumsRef, playlistsRef, tracksRef, playerRef, app };

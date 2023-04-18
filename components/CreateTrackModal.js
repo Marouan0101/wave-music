@@ -17,11 +17,9 @@ const CreateTrackModal = () => {
     const [name, setName] = useState(null);
     const [collabs, setCollabs] = useState(null);
     const [trackFile, setTrackFile] = useState(null);
-    const audioElement = useRef(null);
     const [states, setStates] = useState();
     const [queue, setQueue] = useState();
     const [audio, setAudio] = useState(new Audio());
-
 
     useEffect(() => {
         // update the state every time the state document changes
@@ -34,7 +32,6 @@ const CreateTrackModal = () => {
             setQueue(snapshot.data());
         });
     }, [user]);
-
 
     const handlePlay = async () => {
         audio.play();
@@ -55,6 +52,7 @@ const CreateTrackModal = () => {
     const handleFileUpload = (event) => {
         setTrackFile(event.target.files[0]);
         //audioElement.current.src = URL.createObjectURL(event.target.files[0]);
+        
     };
 
     const previewTrack = {
@@ -88,23 +86,22 @@ const CreateTrackModal = () => {
 
                             {states && states.isPlaying ? (
                                 <div
-                                onClick={() =>{playTrack(previewTrack); handlePause();
-
-                                } }
-                                className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
-                            >
-                                <PauseIcon className="h-8 w-8 text-white" />
-                            </div>
+                                    onClick={() => {
+                                        handlePause();
+                                    }}
+                                    className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                                >
+                                    <PauseIcon className="h-8 w-8 text-white" />
+                                </div>
                             ) : (
                                 <div
-                                    onClick={() =>{playTrack(previewTrack); handlePlay();
-
-                                    } }
+                                    onClick={() => {
+                                        handlePlay();
+                                    }}
                                     className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
                                 >
                                     <PlayIcon className="h-8 w-8 text-white" />
                                 </div>
-                                
                             )}
                         </div>
                         <div className="py-2 text-center">
@@ -161,7 +158,7 @@ const CreateTrackModal = () => {
                                     <TbFileUpload className="h-7 w-7" />
                                 </label>
                                 <input
-                                    onChange={handleFileUpload}
+                                    onChange={()=>{handleFileUpload();playTrack(previewTrack);}}
                                     type="file"
                                     id="songFile"
                                     className="hidden"

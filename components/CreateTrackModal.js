@@ -110,127 +110,131 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
   };
 
   return (
-    <>
-      <div className='absolute z-50 h-full w-[84%] bg-black/80'>
-        <div className='relative m-auto mt-8 h-[26rem] w-1/2 overflow-y-auto rounded-3xl bg-background p-8 shadow-lg'>
-          {/* Preview section */}
-          <RxCross1
-            className='absolute right-8 z-50 h-7 w-7 cursor-pointer transition-all hover:scale-105'
-            onClick={handleClose}
-          />
-          <div className='component m-auto w-52 items-center overflow-hidden rounded-lg bg-background-light p-3  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl'>
-            <div className='relative'>
-              <img
-                src={previewTrack.image}
-                className='m-auto h-48 w-48 rounded-md object-cover'
-              />
+      <>
+          <div className="absolute z-50 h-full w-[84%] bg-black/80">
+              <div className="absolute top-1/2 left-1/2 m-auto h-[30rem] w-3/4  -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-3xl bg-background p-8 shadow-lg">
+                  <RxCross1
+                      className="absolute right-4 top-4 z-50 h-7 w-7 cursor-pointer transition-all hover:scale-105"
+                      onClick={handleClose}
+                  />
+                  <div className="grid h-full grid-cols-8 grid-rows-4 gap-x-6 gap-y-2">
+                      <div className="col-span-4 row-span-4 ">
+                          {/* Preview section */}
+                          <div className="component relative m-auto h-full items-center overflow-hidden rounded-lg bg-background-light p-6  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl">
+                              <div className="relative">
+                                  <img
+                                      src={previewTrack.image}
+                                      className="m-auto w-full rounded-md object-cover"
+                                  />
 
-              {states &&
-              states.isPlaying &&
-              queue.currentTrack.id === previewTrack.id ? (
-                <div
-                  onClick={handlePause}
-                  className='component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl'
-                >
-                  <PauseIcon className='h-8 w-8 text-white' />
-                </div>
-              ) : (
-                <div
-                  onClick={handlePlay}
-                  className='component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl'
-                >
-                  <PlayIcon className='h-8 w-8 text-white' />
-                </div>
-              )}
-            </div>
-            <div className='py-2 text-center'>
-              <div className='text-base font-semibold'>{previewTrack.name}</div>
+                                  {states &&
+                                  states.isPlaying &&
+                                  queue.currentTrack.id === previewTrack.id ? (
+                                      <div
+                                          onClick={handlePause}
+                                          className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                                      >
+                                          <PauseIcon className="h-8 w-8 text-white" />
+                                      </div>
+                                  ) : (
+                                      <div
+                                          onClick={handlePlay}
+                                          className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                                      >
+                                          <PlayIcon className="h-8 w-8 text-white" />
+                                      </div>
+                                  )}
+                              </div>
+                              <div className="absolute bottom-6 right-1/2 translate-x-1/2 py-2 text-center">
+                                  <div className="text-2xl font-semibold">
+                                      {previewTrack.name}
+                                  </div>
 
-              {/* artist names */}
-              <div className='flex justify-center space-x-2 text-sm font-light text-grey-light'>
-                {previewTrack.artists.map((artist) => {
-                  return <div key={artist.uid}>{artist.name}</div>;
-                })}
+                                  {/* artist names */}
+                                  <div className="flex justify-center space-x-2 font-light text-grey-light">
+                                      {previewTrack.artists.map((artist) => {
+                                          return (
+                                              <div key={artist.uid}>
+                                                  {artist.name}
+                                              </div>
+                                          );
+                                      })}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div className="col-span-4 col-start-5 row-span-1 row-start-4">
+                          {/* publish Button */}
+                          <div
+                              onClick={handleSubmit}
+                              className="col-span-2 cursor-pointer rounded-full bg-secondary p-3 text-center font-semibold transition-all hover:bg-primary"
+                          >
+                              Publish
+                          </div>
+                      </div>
+                      <div className="col-span-4 col-start-5">
+                          {/* Song name inputfield */}
+                          <div className="font-semibold">Track title</div>
+                          <input
+                              type="text"
+                              placeholder="Enter a track title"
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                              className="w-full rounded-full bg-slate-100 py-2 px-4 text-black outline-none"
+                          />
+                      </div>
+                      <div className="col-span-4 col-start-5">
+                          <div className="font-semibold">Collaboraters</div>
+                          <input
+                              type="text"
+                              placeholder="Enter a collaborater name"
+                              value={collabName}
+                              onChange={(e) => setCollabName(e.target.value)}
+                              className="w-full rounded-full bg-slate-100 px-4 py-2 text-black outline-none"
+                          />
+                      </div>
+                      <div className="col-span-2 col-start-5">
+                          <div className="rounded-full bg-gradient-to-br from-primary to-secondary p-0.5 transition-all hover:scale-105">
+                              <label
+                                  htmlFor="songFile"
+                                  className="m-auto flex cursor-pointer items-center justify-between rounded-full bg-background-light py-2 px-4 transition-all duration-200 hover:bg-transparent"
+                              >
+                                  <div>Track file</div>
+                                  <TbFileUpload className="h-7 w-7" />
+                              </label>
+                              <input
+                                  onChange={handleFileUpload}
+                                  type="file"
+                                  id="songFile"
+                                  className="hidden"
+                                  accept="audio/mpeg"
+                              />
+                          </div>
+                      </div>
+                      <div className="col-span-2 col-start-7">
+                          <div className="rounded-full bg-gradient-to-br from-primary to-secondary p-0.5 transition-all hover:scale-105">
+                              <label
+                                  htmlFor="coverFile"
+                                  className="m-auto flex cursor-pointer items-center justify-between rounded-full bg-background-light py-2 px-4 transition-all duration-200 hover:bg-transparent"
+                              >
+                                  <div>Cover</div>
+                                  <BsFileEarmarkImage className="h-7 w-7" />
+                              </label>
+                              <input
+                                  onChange={(event) =>
+                                      setImageFile(event.target.files[0])
+                                  }
+                                  type="file"
+                                  id="coverFile"
+                                  className="hidden"
+                                  accept="image/*"
+                              />
+                          </div>
+                      </div>
+                  </div>
               </div>
-            </div>
           </div>
-
-          {/* Input section */}
-          <div className='mt-10 grid grid-cols-2 items-center gap-8'>
-            {/* Song name inputfield */}
-            <div className='col-span-2 space-y-2'>
-              <div className='font-semibold'>Track title</div>
-              <input
-                type='text'
-                placeholder='Enter a track title'
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className='w-full rounded-full bg-slate-100 py-2 px-4 text-black outline-none'
-              />
-            </div>
-            {/* Input collabs */}
-            <div className='col-span-2 space-y-2'>
-              <div className='font-semibold'>Collaboraters</div>
-              <input
-                type='text'
-                placeholder='Enter a collaborater name'
-                value={collabName}
-                onChange={(e) => setCollabName(e.target.value)}
-                className='w-full rounded-full bg-slate-100 px-4 py-2 text-black outline-none'
-              />
-            </div>
-
-            {/* Upload track button */}
-            <div className='col-span-1'>
-              <div className='rounded-full bg-gradient-to-br from-primary to-secondary p-0.5 transition-all hover:scale-105'>
-                <label
-                  htmlFor='songFile'
-                  className='m-auto flex cursor-pointer items-center justify-between rounded-full bg-background-light py-2 px-4 transition-all duration-200 hover:bg-transparent'
-                >
-                  <div>Track file</div>
-                  <TbFileUpload className='h-7 w-7' />
-                </label>
-                <input
-                  onChange={handleFileUpload}
-                  type='file'
-                  id='songFile'
-                  className='hidden'
-                  accept='audio/mpeg'
-                />
-              </div>
-            </div>
-
-            {/* Image upload button */}
-            <div className='col-span-1'>
-              <div className='rounded-full bg-gradient-to-br from-primary to-secondary p-0.5 transition-all hover:scale-105'>
-                <label
-                  htmlFor='coverFile'
-                  className='m-auto flex cursor-pointer items-center justify-between rounded-full bg-background-light py-2 px-4 transition-all duration-200 hover:bg-transparent'
-                >
-                  <div>Cover</div>
-                  <BsFileEarmarkImage className='h-7 w-7' />
-                </label>
-                <input
-                  onChange={(event) => setImageFile(event.target.files[0])}
-                  type='file'
-                  id='coverFile'
-                  className='hidden'
-                  accept='image/*'
-                />
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <div
-              onClick={handleSubmit}
-              className='col-span-2 cursor-pointer rounded-full bg-secondary p-3 text-center font-semibold transition-all hover:bg-primary'
-            >
-              Publish
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+      </>
   );
 };
 

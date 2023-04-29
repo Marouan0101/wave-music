@@ -107,6 +107,7 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
         });
 
       setIsModalOpen(false);
+      setIsPublishLoading(false);
     }
   };
 

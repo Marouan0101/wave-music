@@ -116,20 +116,24 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
   };
 
   const previewTrack = {
-      image: imageFile ? URL.createObjectURL(imageFile) : placeholderImage.src,
-      source: trackFile ? URL.createObjectURL(trackFile) : null,
-      name: name || "Title",
-      id: trackId,
-      artists: [
-          {
-              name: user?.displayName,
-              uid: user?.uid,
-          },
-          {
-              name: collabName,
-          },
-      ],
+    image: imageFile ? URL.createObjectURL(imageFile) : placeholderImage.src,
+    source: trackFile ? URL.createObjectURL(trackFile) : null,
+    name: name || "Title",
+    id: trackId,
+    artists: [
+      {
+        name: user?.displayName,
+        uid: user?.uid,
+      },
+    ],
   };
+  
+  if (collabName) {
+    previewTrack.artists.push({
+      name: collabName,
+    });
+  }
+  
 
   return (
       <>

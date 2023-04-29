@@ -120,9 +120,9 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                   <div className="grid h-full grid-cols-8 grid-rows-4 gap-x-6 gap-y-2">
                       <div className="col-span-4 row-span-4 ">
                           {/* Preview section */}
-                          <div className="component relative w-9/12 m-auto h-full items-center overflow-hidden rounded-lg bg-background-light p-6  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl">
+                          <div className="component relative m-auto h-full w-9/12 items-center overflow-hidden rounded-lg bg-background-light p-6  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl">
                               <div className="relative">
-                                  <img 
+                                  <img
                                       src={previewTrack.image}
                                       className="m-auto h-72 w-72 rounded-md object-cover"
                                   />
@@ -150,15 +150,17 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                                       {previewTrack.name}
                                   </div>
 
-                                  {/* artist names */}
                                   <div className="flex justify-center space-x-2 font-light text-grey-light">
-                                      {previewTrack.artists.map((artist) => {
-                                          return (
-                                              <div key={artist.uid}>
+                                      {previewTrack.artists.map((artist) => (
+                                          <div
+                                              key={artist.uid}
+                                              className="flex items-center"
+                                          >
+                                              <span className="truncate">
                                                   {artist.name}
-                                              </div>
-                                          );
-                                      })}
+                                              </span>
+                                          </div>
+                                      ))}
                                   </div>
                               </div>
                           </div>

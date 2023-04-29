@@ -149,7 +149,7 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                                   <div className="text-2xl font-semibold">
                                       {previewTrack.name}
                                   </div>
-
+                                    {/* Artist names */}
                                   <div className="flex justify-center space-x-2 font-light text-grey-light">
                                       {previewTrack.artists.map((artist) => (
                                           <div

@@ -60,53 +60,75 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
     //audioElement.current.src = URL.createObjectURL(event.target.files[0]);
   };
 
+  const handleImageUpload = async (event) => {
+      await updateDoc(doc(db, "player/states"), {
+          isPlaying: false,
+      });
+
+      setImageFile(event.target.files[0]);
+  };
+
   const handleSubmit = async () => {
-    // Create a storage reference for the file
-    if (trackFile) {
-      const storageRef = ref(storage, 'tracks/' + trackFile.name);
+      // Create a storage reference for the file
+      if (trackFile && imageFile) {
+          const storageRef = ref(storage, "tracks/" + trackFile.name);
+          const imageStorageRef = ref(
+              storage,
+              "tracks/images/" + imageFile.name
+          );
 
-      // Upload the file to Firebase Storage
-      await uploadBytesResumable(storageRef, trackFile)
-        .then(() => {
-          // Handle successful upload
-          console.log('Upload successful');
+          // Upload the files to Firebase Storage
+          await Promise.all([
+              uploadBytesResumable(storageRef, trackFile),
+              uploadBytesResumable(imageStorageRef, imageFile),
+          ])
+              .then(async () => {
+                  // Handle successful upload
+                  console.log("Upload successful");
 
-          // Get the download URL for the uploaded file
-          getDownloadURL(storageRef).then(async (url) => {
-            console.log('File available at', url);
-            previewTrack.source = url;
-            // Save the download URL to your Firestore database
-            await updateDoc(doc(db, 'tracks', trackId), previewTrack);
-          });
-        })
-        .catch((error) => {
-          // Handle errors during upload
-          console.error('Upload failed:', error);
-        });
+                  // Get the download URLs for the uploaded files
+                  const [trackUrl, imageUrl] = await Promise.all([
+                      getDownloadURL(storageRef),
+                      getDownloadURL(imageStorageRef),
+                  ]);
 
-      setIsModalOpen(false);
-    }
+                  console.log("Track available at", trackUrl);
+                  console.log("Image available at", imageUrl);
+
+                  previewTrack.source = trackUrl;
+                  previewTrack.image = imageUrl;
+
+                  // Save the download URLs to your Firestore database
+                  await updateDoc(doc(db, "tracks", trackId), previewTrack);
+              })
+              .catch((error) => {
+                  // Handle errors during upload
+                  console.error("Upload failed:", error);
+              });
+
+          setIsModalOpen(false);
+      }
   };
 
   const handleClose = async () => {
-    deleteDoc(doc(db, 'tracks', trackId));
-    setIsModalOpen(false);
+      deleteDoc(doc(db, "tracks", trackId));
+      setIsModalOpen(false);
   };
 
   const previewTrack = {
-    image: imageFile ? URL.createObjectURL(imageFile) : placeholderImage.src,
-    source: trackFile ? URL.createObjectURL(trackFile) : null,
-    name: name || 'Title',
-    id: trackId,
-    artists: [
-      {
-        name: user?.displayName,
-        uid: user?.uid,
-      },
-      {
-        name: collabName,
-      },
-    ],
+      image: imageFile ? URL.createObjectURL(imageFile) : placeholderImage.src,
+      source: trackFile ? URL.createObjectURL(trackFile) : null,
+      name: name || "Title",
+      id: trackId,
+      artists: [
+          {
+              name: user?.displayName,
+              uid: user?.uid,
+          },
+          {
+              name: collabName,
+          },
+      ],
   };
 
   return (
@@ -149,7 +171,7 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                                   <div className="text-2xl font-semibold">
                                       {previewTrack.name}
                                   </div>
-                                    {/* Artist names */}
+                                  {/* Artist names */}
                                   <div className="flex justify-center space-x-2 font-light text-grey-light">
                                       {previewTrack.artists.map((artist) => (
                                           <div
@@ -223,9 +245,7 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                                   <BsFileEarmarkImage className="h-7 w-7" />
                               </label>
                               <input
-                                  onChange={(event) =>
-                                      setImageFile(event.target.files[0])
-                                  }
+                                  onChange={handleImageUpload}
                                   type="file"
                                   id="coverFile"
                                   className="hidden"

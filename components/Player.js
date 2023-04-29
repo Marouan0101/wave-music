@@ -23,6 +23,7 @@ const Player = () => {
   const [queue, setQueue] = useState();
   const [audio, setAudio] = useState(new Audio());
   const [isPlaying, setIsPlaying] = useState(false);
+  const [progressWidth, setProgressWidth] = useState(0);
 
   useEffect(() => {
     // update the state every time the state document changes
@@ -44,6 +45,16 @@ const Player = () => {
       audio.play();
     }
   }, [queue?.currentTrack]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (audio && audio.duration) {
+        const percentage = audio.currentTime / audio.duration;
+        setProgressWidth(percentage * 100);
+      }
+    }, 0);
+    return () => clearInterval(intervalId);
+  }, [audio]);
 
   const handlePlay = async () => {
     await updateDoc(doc(db, 'player/states'), {
@@ -68,16 +79,20 @@ const Player = () => {
   }
 
   return (
-    <div className='fixed bottom-4 left-1/2 z-50 h-16 w-11/12 -translate-x-1/2 rounded-xl bg-purple-dark shadow-xl transition-all duration-300'>
-      {/* Progressbar */}
-      <div></div>
+    <div className='fixed bottom-4 left-1/2 z-50 w-11/12 -translate-x-1/2 rounded-xl bg-purple-dark shadow-xl transition-all duration-300'>
+      {/* ProgressLine */}
+      <div
+        id='progressLine'
+        className='h-1 rounded-full  bg-gradient-to-r from-transparent via-primary/50 to-primary'
+        style={{ width: `${progressWidth}%` }}
+      ></div>
 
       <div className='grid grid-cols-3'>
         {/* left */}
         <div className='col-span-1 flex items-center'>
           <img
             src={queue?.currentTrack.image}
-            className='h-16 w-16 rounded-l-xl  object-cover'
+            className='h-16 w-16 rounded-bl-xl object-cover'
           />
 
           <div className='space-y-1 px-2'>

@@ -56,7 +56,7 @@ const CardLarge = ({ track }) => {
                     onClick={() => setIsMenuOpen(false)}
                 >
                     <div
-                        className='absolute z-50 w-40 space-y-2 rounded-xl bg-black p-4 text-right shadow-lg'
+                        className='absolute z-50 w-40 space-y-2 rounded-xl bg-background-light p-4 text-right shadow-lg'
                         style={{
                             top: menuPosition.y,
                             left: menuPosition.x,

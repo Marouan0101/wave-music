@@ -35,38 +35,43 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
     });
   });
 
+  // update the audio source every time the current track changes
   const handlePlay = async () => {
+    // if the queue has a current track, update the audio source
     if (previewTrack.source) {
-      if (queue.currentTrack !== previewTrack) {
-        playTrack(previewTrack);
+      if (queue.currentTrack !== previewTrack) {// if the audio is playing, pause it
+        playTrack(previewTrack); // play the track
       }
-
+      // update the state to playing
       await updateDoc(doc(db, 'player/states'), {
         isPlaying: true,
       });
     }
   };
-
-  const handlePause = async () => {
+// pause the audio
+  const handlePause = async () => { 
+    // update the state to paused
     await updateDoc(doc(db, 'player/states'), {
       isPlaying: false,
     });
   };
 
+  // upload the track file
   const handleFileUpload = async (event) => {
     await updateDoc(doc(db, 'player/states'), {
       isPlaying: false,
     });
-
+    // set the track file
     setTrackFile(event.target.files[0]);
     //audioElement.current.src = URL.createObjectURL(event.target.files[0]);
   };
 
+  // upload the image file
   const handleImageUpload = async (event) => {
     await updateDoc(doc(db, 'player/states'), {
       isPlaying: false,
     });
-
+    // set the image file
     setImageFile(event.target.files[0]);
   };
 
@@ -105,23 +110,25 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
           // Handle errors during upload
           console.error('Upload failed:', error);
         });
-
-      setIsModalOpen(false);
-      setIsPublishLoading(false);
+       
+      setIsModalOpen(false); // close the modal
+      setIsPublishLoading(false); // reset the loading state
     }
   };
 
-  const handleClose = async () => {
+  // delete the track from the database
+  const handleClose = async () => { 
     deleteDoc(doc(db, 'tracks', trackId));
-    setIsModalOpen(false);
+    setIsModalOpen(false); // close the modal
   };
 
+  // create a preview track object
   const previewTrack = {
-    image: imageFile ? URL.createObjectURL(imageFile) : placeholderImage.src,
-    source: trackFile ? URL.createObjectURL(trackFile) : null,
-    name: name || "Title",
-    id: trackId,
-    artists: [
+    image: imageFile ? URL.createObjectURL(imageFile) : placeholderImage.src, // use the placeholder image if no image is uploaded
+    source: trackFile ? URL.createObjectURL(trackFile) : null, //if no track is uploaded, set the source to null
+    name: name || "Title", // use the placeholder title if no title is entered
+    id: trackId, //get the track id from the database
+    artists: [ // get the user's name and uid from the auth object
       {
         name: user?.displayName,
         uid: user?.uid,
@@ -129,6 +136,7 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
     ],
   };
   
+  // add the collaborator's name to the preview track object if it exists
   if (collabName) {
     previewTrack.artists.push({
       name: collabName,
@@ -137,15 +145,18 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
   
 
   return (
-      <>
+      <> {/* Background shadow*/}
           <div className="absolute z-50 h-full w-[84%] bg-black/80">
+            {/* Pop up modal */}
               <div className="absolute top-1/2 left-1/2 m-auto h-[30rem] w-3/4  -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-3xl bg-background p-8 shadow-lg">
+                  {/* Close button: when pressed run handleClose - closes the modal */}
                   <RxCross1
                       className="absolute right-4 top-4 z-50 h-7 w-7 cursor-pointer transition-all hover:scale-105"
                       onClick={handleClose}
                   />
                   <div className="grid h-full grid-cols-8 grid-rows-4 gap-x-6 gap-y-2">
                       <div className="col-span-4 row-span-4 ">
+                          
                           {/* Preview section */}
                           <div className="component relative m-auto h-full w-9/12 items-center overflow-hidden rounded-lg bg-background-light p-6  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl">
                               <div className="relative">
@@ -153,17 +164,24 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                                       src={previewTrack.image}
                                       className="m-auto h-72 w-72 rounded-md object-cover"
                                   />
-
-                                  {states &&
-                                  states.isPlaying &&
-                                  queue.currentTrack.id === previewTrack.id ? (
+                                  {/* Play/Pause button: when pressed  */}                                     
+                                  {
+                                    // if the track is playing, show the pause button
+                                  states && // check if the states object exists
+                                  states.isPlaying && // check if the track is playing
+                                  // check if the current track is the preview track
+                                  queue.currentTrack.id === previewTrack.id ? 
+                                  // if so, show the pause button
+                                  (
                                       <div
                                           onClick={handlePause}
                                           className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
                                       >
                                           <PauseIcon className="h-8 w-8 text-white" />
                                       </div>
-                                  ) : (
+                                  )
+                                  // if the track is not playing, show the play button 
+                                  : (
                                       <div
                                           onClick={handlePlay}
                                           className="component-play absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 cursor-pointer rounded-full bg-gradient-to-br from-primary to-secondary p-2 opacity-0 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
@@ -172,27 +190,30 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                                       </div>
                                   )}
                               </div>
+                              {/* Trak title */}
                               <div className="absolute bottom-6 right-1/2 translate-x-1/2 py-2 text-center">
                                   <div className="text-2xl font-semibold">
                                       {previewTrack.name}
                                   </div>
                                   {/* Artist names */}
                                   <div className="flex justify-center space-x-2 font-light text-grey-light">
-                                      {previewTrack.artists.map(
+                                      { // map through the artists array and display the artist names
+                                      previewTrack.artists.map(
                                           (artist, index) => (
                                               <div
                                                   key={artist.uid}
                                                   className="flex items-center"
                                               >
                                                   <span className="truncate">
+                                                   {/* if the artist name is too long, truncate it */}
                                                       {artist.name}
                                                   </span>
-                                                  {index !==
+                                                  {
+    
+                                                  index !==
                                                       previewTrack.artists
                                                           .length -
-                                                          1 &&
-                                                      previewTrack.artists
-                                                          .length > 1 &&
+                                                          1  && // if there is more than one artist, show a comma
                                                       ", "}
                                               </div>
                                           )
@@ -205,13 +226,16 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                           {/* publish Button */}
                           <button
                               onClick={() =>
-                                  !isPublishLoading && handleSubmit()
+                                  !isPublishLoading // check if the track is loading
+                                   && handleSubmit() // if the track is not loading, run handleSubmit
                               }
                               className="col-span-2 flex cursor-pointer rounded-full bg-secondary p-3 text-center font-semibold transition-all hover:bg-primary disabled:cursor-wait disabled:opacity-30"
+                              /* disable the button if the track is loading */
                               disabled={isPublishLoading}
                           >
                               <div>Publish</div>
-                              {isPublishLoading && (
+                              { // if the track is loading, show the loading icon
+                              isPublishLoading && ( 
                                   <AiOutlineLoading3Quarters className="h-8 w-8 animate-spin" />
                               )}
                           </button>
@@ -223,7 +247,8 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                               type="text"
                               placeholder="Enter a track title"
                               value={name}
-                              onChange={(e) => setName(e.target.value)}
+                              onChange={ // when the input field changes, set the name to the input value
+                                (e) => setName(e.target.value)}
                               className="w-full rounded-full bg-slate-100 py-2 px-4 text-black outline-none"
                           />
                       </div>
@@ -233,25 +258,27 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                               type="text"
                               placeholder="Enter a collaborater name"
                               value={collabName}
-                              onChange={(e) => setCollabName(e.target.value)}
+                              onChange={// when the input field changes, set the collabName to the input value
+                                (e) => setCollabName(e.target.value)}
                               className="w-full rounded-full bg-slate-100 px-4 py-2 text-black outline-none"
                           />
                       </div>
                       <div className="col-span-2 col-start-5">
                           <div className="rounded-full bg-gradient-to-br from-primary to-secondary p-0.5 transition-all hover:scale-105">
                               <label
-                                  htmlFor="songFile"
+                                  htmlFor="songFile" // when the label is clicked, click the input field
                                   className="m-auto flex cursor-pointer items-center justify-between rounded-full bg-background-light py-2 px-4 transition-all duration-200 hover:bg-transparent"
                               >
                                   <div>Track file</div>
                                   <TbFileUpload className="h-7 w-7" />
                               </label>
                               <input
-                                  onChange={handleFileUpload}
+                                  onChange={// when the input field changes, set the songFile to the input value
+                                    handleFileUpload}
                                   type="file"
                                   id="songFile"
                                   className="hidden"
-                                  accept="audio/mpeg"
+                                  accept="audio/mpeg" // only accept mp3 files
                               />
                           </div>
                       </div>
@@ -265,7 +292,8 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                                   <BsFileEarmarkImage className="h-7 w-7" />
                               </label>
                               <input
-                                  onChange={handleImageUpload}
+                                  onChange={ // when the input field changes, set the coverFile to the input value
+                                    handleImageUpload}
                                   type="file"
                                   id="coverFile"
                                   className="hidden"

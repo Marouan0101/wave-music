@@ -67,15 +67,12 @@ const CardLarge = ({ track }) => {
           </div>
           <div className="py-2 text-center">
               <div className="text-base font-semibold">{track?.name}</div>
-              {/* <div className='text-sm font-light text-grey-light'>
-          {track?.artists[0].name}
-        </div> */}
+              
               <div className="flex justify-center space-x-2 font-light text-grey-light">
                   {track?.artists.map((artist, index) => (
                       <div key={artist.uid} className="flex items-center">
                           <span className="truncate">{artist.name}</span>
                           {index !== track.artists.length - 1 &&
-                              track.artists.length > 1 &&
                               ", "}
                       </div>
                   ))}

@@ -3,7 +3,7 @@ import Link from 'next/link';
 const SidemenuPlaylist = ({ name, image, id }) => {
   return (
     <Link
-      href={'playlist?id=' + id}
+      href={'/playlist/' + id}
       className='flex  items-center space-x-1 text-sm font-medium'
     >
       {image && (

@@ -37,26 +37,11 @@ const Sidemenu = ({ name, image }) => {
     return unsubscribe;
   }, [user]);
 
-  //console.log('User', user);
-  //console.log('Playlists', playlists);
-
-  /* document.addEventListener('DOMContentLoaded', function () {
-    let elt = document.querySelectorAll('.slide-text > *');
-
-    anime({
-      targets: elt,
-      translateX: '-100%',
-      duration: 10000,
-      easing: 'linear',
-      loop: true,
-    });
-  }); */
-
   return (
     <div className='absolute top-0 left-0 h-full w-[16%] overflow-y-auto border-r border-grey-dark px-3 pb-24'>
       {/* Profile */}
       <div>
-        <Link id='sidemenu-profile' href='/profile'>
+        <div id='sidemenu-profile'>
           <div className='flex cursor-pointer  items-center space-x-3 py-3 transition-all duration-300 ease-out hover:text-primary'>
             <div
               onClick={() => setIsProfileOpen(!isProfileOpen)}
@@ -68,13 +53,17 @@ const Sidemenu = ({ name, image }) => {
               <AiFillSetting className='icon-settings absolute right-1/2 bottom-1/2 z-50 h-5 w-5 translate-x-1/2 translate-y-1/2 text-grey-light opacity-0 transition-all duration-200' />
             </div>
 
-            <div className={`text-xl font-semibold`}>{name}</div>
+            <Link href='/profile' className={`text-xl font-semibold`}>
+              {name}
+            </Link>
           </div>
-        </Link>
+        </div>
 
         {isProfileOpen && (
           <div className='absolute z-50 space-y-1 rounded-lg bg-background-light p-2 text-sm shadow-lg shadow-black'>
-            <div className='cursor-pointer hover:underline'>Account</div>
+            <Link href='/profile' className='cursor-pointer hover:underline'>
+              Profile
+            </Link>
 
             <div className=' cursor-pointer hover:underline'>Preferences</div>
 

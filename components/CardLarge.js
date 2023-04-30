@@ -26,14 +26,10 @@ const CardLarge = ({ track }) => {
         });
     }, [user]);
 
-    const handleOptionsMenu = (event, trackId) => {
+    const handleOptionsMenu = (event) => {
         event.preventDefault();
         setIsMenuOpen(true); // Show the menu
         setMenuPosition({ x: event.clientX, y: event.clientY });
-    };
-
-    const handleMenuClose = () => {
-        setIsMenuOpen(false);
     };
 
     const handlePlay = async () => {
@@ -55,7 +51,10 @@ const CardLarge = ({ track }) => {
     return (
         <>
             {isMenuOpen && (
-                <div className='fixed inset-0 z-40' onClick={handleMenuClose}>
+                <div
+                    className='fixed inset-0 z-40'
+                    onClick={() => setIsMenuOpen(false)}
+                >
                     <div
                         className='absolute z-50 w-40 space-y-2 rounded-xl bg-black p-4 text-right shadow-lg'
                         style={{
@@ -86,7 +85,7 @@ const CardLarge = ({ track }) => {
                 </div>
             )}
             <div
-                onContextMenu={(event) => handleOptionsMenu(event, track.id)}
+                onContextMenu={(event) => handleOptionsMenu(event)}
                 className='component items-center rounded-lg bg-background-light p-3  pb-0 shadow-md transition-all hover:scale-105 hover:shadow-2xl'
             >
                 <div className='relative'>

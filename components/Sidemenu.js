@@ -80,8 +80,12 @@ const Sidemenu = ({ name, image }) => {
       {/* Sidebar links */}
       <div className='space-y-6 py-4 font-semibold '>
         <SidemenuLink text='Home' icon={HomeIcon.src} url='/' />
-        <SidemenuLink text='Liked tracks' icon={HeartIcon.src} url='/1' />
-        <SidemenuLink text='Playlists' icon={PlaylistIcon.src} url='/2' />
+        <SidemenuLink text='Liked tracks' icon={HeartIcon.src} url='/liked' />
+        <SidemenuLink
+          text='Playlists'
+          icon={PlaylistIcon.src}
+          url='/playlists'
+        />
 
         <CreatePlaylist user={user} />
       </div>

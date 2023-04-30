@@ -1,6 +1,6 @@
 import { PauseIcon, PlayIcon } from '@heroicons/react/24/solid';
 import React, { useEffect, useState } from 'react';
-import { playTrack } from '../firebase/getPlayer';
+import { addTrackToQueue, playTrack } from '../firebase/getPlayer';
 import { deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -64,7 +64,7 @@ const CardLarge = ({ track }) => {
                     >
                         <div>
                             <div
-                                onClick={() => addTrackToQueue()}
+                                onClick={() => addTrackToQueue(track)}
                                 className='mb-2 cursor-pointer text-sm'
                             >
                                 Add to queue

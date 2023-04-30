@@ -144,17 +144,6 @@ const Player = () => {
                               }
                           })}
                       </div>
-                      {/* Its a work in progress to make comma work correctly  */}
-                      {/* <div className="flex justify-center space-x-2 font-light text-grey-light">
-                  {queue?.currentTrack.artists.map((artist, index) => (
-                      <div key={artist.uid} className="flex items-center">
-                          <span className="truncate">{artist.name}</span>
-                          {index !== queue.currentTrack.artists.length - 1 &&
-                              queue.currentTrack.artists.length > 1 &&
-                              ", "}
-                      </div>
-                  ))}
-              </div> */}
                   </div>
 
                   <img src={HeartIcon.src} className="ml-10 h-5 w-5" />

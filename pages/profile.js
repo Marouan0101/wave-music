@@ -24,30 +24,12 @@ const Profile = () => {
     const [tracks, setTracks] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [trackId, setTrackId] = useState(null);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
-    const [queue, setQueue] = useState();
 
     useEffect(() => {
         getUserTracks(user).then((tracks) => {
             setTracks(tracks);
         });
     }, [isModalOpen]);
-
-    const handleOptionsMenu = (event, trackId) => {
-        event.preventDefault();
-        setIsMenuOpen(true); // Show the menu
-        setMenuPosition({ x: event.clientX, y: event.clientY });
-        setTrackId(trackId); // Set the track ID
-    };
-
-    const handleMenuClose = () => {
-        setIsMenuOpen(false);
-    };
-    // delete the track from the database
-    const handleDelete = async () => {
-        deleteDoc(doc(db, "tracks", trackId));
-    };
 
     const createTrack = async () => {
         const trackDoc = await addDoc(collection(db, "tracks"), {});
@@ -71,40 +53,6 @@ const Profile = () => {
     if (user) {
         return (
             <>
-                {isMenuOpen && (
-                    <div
-                        className="fixed inset-0 z-40"
-                        onClick={handleMenuClose}
-                    >
-                        <div
-                            className="absolute z-50 w-40 space-y-2 rounded-xl bg-black p-4 text-right shadow-lg"
-                            style={{
-                                top: menuPosition.y,
-                                left: menuPosition.x,
-                            }}
-                        >
-                            <div>
-                                <div
-                                    //onClick={() => addTrackToQueue()}
-                                    className="mb-2 cursor-pointer text-sm"
-                                >
-                                    Add to queue
-                                </div>
-                                <hr className="w-full border-grey-dark" />
-                                <div className="mt-2 mb-2 cursor-default text-sm">
-                                    Add to playlist
-                                </div>
-                                <hr className="w-full border-grey-dark" />
-                                <div
-                                    onClick={handleDelete}
-                                    className="mt-2 cursor-default text-sm"
-                                >
-                                    Delete track
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
                 {isModalOpen && (
                     <CreateTrackModal
                         isModalOpen={isModalOpen}
@@ -142,17 +90,8 @@ const Profile = () => {
                             {/* Track */}
                             {tracks?.map((track) => {
                                 return (
-                                    <div
-                                        onContextMenu={(event) =>
-                                            handleOptionsMenu(event, track.id)
-                                        }
-                                    >
-                                        <div
-                                            key={track.id}
-                                            className="col-span-1"
-                                        >
-                                            <CardLarge track={track} />
-                                        </div>
+                                    <div key={track.id} className="col-span-1">
+                                        <CardLarge track={track} />
                                     </div>
                                 );
                             })}

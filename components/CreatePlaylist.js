@@ -16,7 +16,7 @@ const CreatePlaylist = ({ user }) => {
         uid: user.uid,
       },
     });
-    router.push(`/playlist/${playlistDoc.id}`);
+    router.push(`/playlists/${playlistDoc.id}`);
   };
 
   return (

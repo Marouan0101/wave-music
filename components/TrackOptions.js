@@ -12,7 +12,7 @@ const TrackOptions = ({ track }) => {
           onClick={() => setIsOpen(!isOpen)}
           className='h-7 w-7 cursor-pointer text-primary shadow-xl transition-all hover:scale-105 '
         />
-        <div className='absolute bottom-20 right-0 w-40 space-y-2 rounded-xl bg-black p-4 text-right'>
+        <div className='absolute bottom-20 right-0 w-40 space-y-2 rounded-xl bg-purple-dark p-4 text-right'>
           <div
             onClick={() => addTrackToQueue(track)}
             className='cursor-pointer text-sm'

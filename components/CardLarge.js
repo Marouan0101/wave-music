@@ -1,14 +1,15 @@
 import { PauseIcon, PlayIcon } from '@heroicons/react/24/solid';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { addTrackToQueue, playTrack } from '../firebase/getPlayer';
 import { deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/auth';
 import DeleteTrackById from './DeleteTrackById';
+import { AppContext } from '../AppState';
 
 const CardLarge = ({ track }) => {
-    const [user, loading] = useAuthState(auth);
+    const { user, isUserLoading } = useContext(AppContext);
     const [states, setStates] = useState();
     const [queue, setQueue] = useState();
     const [isMenuOpen, setIsMenuOpen] = useState(false);

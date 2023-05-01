@@ -6,8 +6,11 @@ import '../styles/globals.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AppProvider } from '../AppState';
+import { useRouter } from 'next/router';
+import Login from './login';
 
 export default function App({ Component, pageProps }) {
+    const router = useRouter();
     const [user, loading] = useAuthState(auth);
 
     if (loading) {
@@ -15,11 +18,7 @@ export default function App({ Component, pageProps }) {
     }
 
     if (!user) {
-        return (
-            <>
-                <Component {...pageProps} />
-            </>
-        );
+        return <Login />;
     }
 
     return (

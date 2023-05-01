@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { TbFileUpload } from 'react-icons/tb';
 import { BsFileEarmarkImage } from 'react-icons/bs';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
@@ -15,9 +15,10 @@ import storage from '../firebase/storage';
 import CardLarge from './CardLarge';
 import { toast } from 'react-toastify';
 import DeleteTrackById from './DeleteTrackById';
+import { AppContext } from '../AppState';
 
 const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
-    const [user, loading] = useAuthState(auth);
+    const { user, isUserLoading } = useContext(AppContext);
     const [imageFile, setImageFile] = useState(null);
     const [name, setName] = useState(null);
     const [collabName, setCollabName] = useState(null);
@@ -44,8 +45,7 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
             isPlaying: false,
         });
         // set the track file
-        setTrackFile(event.target.files[0]),
-        toast.success('Track uploaded!');
+        setTrackFile(event.target.files[0]), toast.success('Track uploaded!');
         //audioElement.current.src = URL.createObjectURL(event.target.files[0]);
     };
 
@@ -55,8 +55,7 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
             isPlaying: false,
         });
         // set the image file
-        setImageFile(event.target.files[0]),
-        toast.success('Image uploaded!');
+        setImageFile(event.target.files[0]), toast.success('Image uploaded!');
     };
 
     const handleSubmit = async () => {

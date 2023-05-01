@@ -3,22 +3,17 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/router';
 import { auth } from '../firebase/auth';
 import 'firebase/firestore';
+import { useContext } from 'react';
+import { AppContext } from '../AppState';
 
 export default function Home() {
+    const { user, isUserLoading } = useContext(AppContext);
     const router = useRouter();
-    const [user, loading] = useAuthState(auth);
 
-    if (loading) {
+    if (isUserLoading) {
         return <div>Loading...</div>;
     }
 
-    if (!user) {
-        router.push('/login');
-    }
-
-    //console.log(user);
-
-    console.log(user);
     return (
         <>
             <Head>

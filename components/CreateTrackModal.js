@@ -44,7 +44,8 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
             isPlaying: false,
         });
         // set the track file
-        setTrackFile(event.target.files[0]);
+        setTrackFile(event.target.files[0]),
+        toast.success('Track uploaded!');
         //audioElement.current.src = URL.createObjectURL(event.target.files[0]);
     };
 
@@ -54,7 +55,8 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
             isPlaying: false,
         });
         // set the image file
-        setImageFile(event.target.files[0]);
+        setImageFile(event.target.files[0]),
+        toast.success('Image uploaded!');
     };
 
     const handleSubmit = async () => {

@@ -162,7 +162,7 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                                         !isPublishLoading && // check if the track is loading
                                         handleSubmit() // if the track is not loading, run handleSubmit
                                 }
-                                className='relative col-span-2 flex w-full cursor-pointer rounded-full bg-secondary p-3 text-center font-semibold transition-all hover:bg-primary disabled:cursor-not-allowed disabled:bg-primary disabled:opacity-30'
+                                className='item-center relative col-span-2 flex w-full cursor-pointer rounded-full bg-secondary p-3 text-center font-semibold transition-all hover:bg-primary disabled:cursor-not-allowed disabled:bg-primary disabled:opacity-30'
                                 /* disable the button if the track is loading */
                                 disabled={isPublishLoading}
                             >

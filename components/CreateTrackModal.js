@@ -137,7 +137,7 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
             {/* Background shadow*/}
             <div className='absolute z-50 h-full w-[84%] bg-black/80'>
                 {/* Pop up modal */}
-                <div className='absolute top-1/2 left-1/2 m-auto h-[30rem] w-3/4  -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-3xl bg-background p-8 shadow-lg'>
+                <div className='absolute top-0 left-1/2 m-auto h-[80%] w-3/4  -translate-x-1/2  overflow-y-auto rounded-3xl bg-background p-8 shadow-lg'>
                     {/* Close button: when pressed run handleClose - closes the modal */}
 
                     <DeleteTrackById
@@ -162,15 +162,15 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                                         !isPublishLoading && // check if the track is loading
                                         handleSubmit() // if the track is not loading, run handleSubmit
                                 }
-                                className='col-span-2 flex cursor-pointer rounded-full bg-secondary p-3 text-center font-semibold transition-all hover:bg-primary disabled:cursor-wait disabled:opacity-30'
+                                className='relative col-span-2 flex w-full cursor-pointer rounded-full bg-secondary p-3 text-center font-semibold transition-all hover:bg-primary disabled:cursor-not-allowed disabled:bg-primary disabled:opacity-30'
                                 /* disable the button if the track is loading */
                                 disabled={isPublishLoading}
                             >
-                                <div>Publish</div>
+                                <div className='flex-1'>Publish</div>
                                 {
                                     // if the track is loading, show the loading icon
                                     isPublishLoading && (
-                                        <AiOutlineLoading3Quarters className='h-8 w-8 animate-spin' />
+                                        <AiOutlineLoading3Quarters className='absolute right-4 h-8 w-8 animate-spin' />
                                     )
                                 }
                             </button>

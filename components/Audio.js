@@ -1,8 +1,8 @@
-import { useContext, useEffect, useRef } from "react";
-import { AudioContext } from "../audioContext";
+import { useContext, useEffect, useRef } from 'react';
+import { AppContext } from '../AppState';
 
 const Audio = ({ track }) => {
-    const { isPlaying, setIsPlaying } = useContext(AudioContext); // add isPlaying from context
+    const { isPlaying, setIsPlaying } = useContext(AppContext); // add isPlaying from context
     const audioElement = useRef(null);
 
     useEffect(() => {

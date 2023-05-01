@@ -13,6 +13,8 @@ import { RxCross1 } from 'react-icons/rx';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import storage from '../firebase/storage';
 import CardLarge from './CardLarge';
+import { toast } from 'react-toastify';
+import DeleteTrackById from './DeleteTrackById';
 
 const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
     const [user, loading] = useAuthState(auth);
@@ -35,28 +37,6 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
             setQueue(snapshot.data());
         });
     });
-
-    // update the audio source every time the current track changes
-    const handlePlay = async () => {
-        // if the queue has a current track, update the audio source
-        if (previewTrack.source) {
-            if (queue.currentTrack !== previewTrack) {
-                // if the audio is playing, pause it
-                playTrack(previewTrack); // play the track
-            }
-            // update the state to playing
-            await updateDoc(doc(db, 'player/states'), {
-                isPlaying: true,
-            });
-        }
-    };
-    // pause the audio
-    const handlePause = async () => {
-        // update the state to paused
-        await updateDoc(doc(db, 'player/states'), {
-            isPlaying: false,
-        });
-    };
 
     // upload the track file
     const handleFileUpload = async (event) => {
@@ -110,10 +90,12 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
 
                     // Save the download URLs to the Firestore database
                     await updateDoc(doc(db, 'tracks', trackId), previewTrack);
+                    toast.success(previewTrack.name + ' has been published!');
                 })
                 .catch((error) => {
                     // Handle errors during upload
                     console.error('Upload failed:', error);
+                    toast.success('Publish failed :(');
                 });
 
             setIsModalOpen(false); // close the modal
@@ -123,7 +105,6 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
 
     // delete the track from the database
     const handleClose = async () => {
-        deleteDoc(doc(db, 'tracks', trackId));
         setIsModalOpen(false); // close the modal
     };
 
@@ -158,9 +139,15 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                 {/* Pop up modal */}
                 <div className='absolute top-1/2 left-1/2 m-auto h-[30rem] w-3/4  -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-3xl bg-background p-8 shadow-lg'>
                     {/* Close button: when pressed run handleClose - closes the modal */}
-                    <RxCross1
-                        className='absolute right-4 top-4 z-50 h-7 w-7 cursor-pointer transition-all hover:scale-105'
-                        onClick={handleClose}
+
+                    <DeleteTrackById
+                        id={trackId}
+                        buttonText={
+                            <RxCross1
+                                className='absolute right-4 top-4 z-50 h-7 w-7 cursor-pointer transition-all hover:scale-105'
+                                onClick={handleClose}
+                            />
+                        }
                     />
                     <div className='grid h-full grid-cols-8 grid-rows-4 gap-x-6 gap-y-2'>
                         <div className='col-span-4 row-span-4 '>

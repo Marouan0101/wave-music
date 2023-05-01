@@ -5,7 +5,7 @@ import { deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/auth';
-import deleteTrackById from '../firebase/deleteTrackById';
+import DeleteTrackById from './DeleteTrackById';
 
 const CardLarge = ({ track }) => {
     const [user, loading] = useAuthState(auth);
@@ -74,11 +74,11 @@ const CardLarge = ({ track }) => {
                                 Add to playlist
                             </div>
                             <hr className='w-full border-grey-dark' />
-                            <div
-                                onClick={() => deleteTrackById(track.id)}
-                                className='mt-2 cursor-default text-sm'
-                            >
-                                Delete track
+                            <div className='mt-2 cursor-default text-sm'>
+                                <DeleteTrackById
+                                    id={track.id}
+                                    buttonText='Delete'
+                                />
                             </div>
                         </div>
                     </div>

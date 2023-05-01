@@ -138,7 +138,6 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
 
                     <DeleteTrackById
                         id={trackId}
-                        showMessage={false}
                         buttonText={
                             <RxCross1
                                 className='absolute right-4 top-4 z-50 h-7 w-7 cursor-pointer transition-all hover:scale-105'

@@ -78,6 +78,7 @@ const CardLarge = ({ track }) => {
                             <div className='mt-2 cursor-default text-sm'>
                                 <DeleteTrackById
                                     id={track.id}
+                                    showToaster
                                     buttonText='Delete'
                                 />
                             </div>

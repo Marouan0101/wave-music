@@ -148,7 +148,9 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                     <div className='grid h-full grid-cols-8 grid-rows-4 gap-x-6 gap-y-2'>
                         <div className='col-span-4 row-span-4 '>
                             {/* Preview section */}
-                            <CardLarge track={previewTrack} />
+                            <div className='m-auto w-[80%]'>
+                                <CardLarge track={previewTrack} />
+                            </div>
                         </div>
                         <div className='col-span-4 col-start-5 row-span-1 row-start-4'>
                             {/* publish Button */}

@@ -91,7 +91,7 @@ const CardLarge = ({ track }) => {
                 <div className='relative'>
                     <img
                         src={track?.image}
-                        className='h-40 w-full rounded-md object-cover'
+                        className='aspect-square w-full rounded-md object-cover'
                     />
 
                     {states &&

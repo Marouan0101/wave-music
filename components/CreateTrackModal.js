@@ -190,7 +190,7 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                             <div className='font-semibold'>Collaboraters</div>
                             <input
                                 type='text'
-                                placeholder='Enter a collaborater name'
+                                placeholder='Enter a collaboration artist'
                                 value={collabName}
                                 onChange={
                                     // when the input field changes, set the collabName to the input value

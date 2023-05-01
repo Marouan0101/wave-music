@@ -21,9 +21,9 @@ const Login = () => {
         return <div>Loading...</div>;
     }
 
-    /* if (user) {
+    if (user) {
         router.push('/');
-    } */
+    } 
 
     return (
         <>

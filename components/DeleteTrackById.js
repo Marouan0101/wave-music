@@ -5,21 +5,21 @@ import { AppContext } from '../AppState';
 import { toast } from 'react-toastify';
 import React from 'react';
 
-const DeleteTrackById = ({ id, buttonText, showToaster }) => {
+const DeleteTrackById = ({ id, buttonText, showToast }) => {
     const { isTrackModified, setIsTrackModified } = useContext(AppContext);
     // delete the track from the database
     const handleDelete = async () => {
         await deleteDoc(doc(db, 'tracks', id)).then(
             // success
             () => {
-                // if show message is true, show a toast
-                if (showToaster) {
+                // if showToast is true, show a toast
+                if (showToast) {
                     toast.success('Track deleted');
                 }
             },
             // failure
             (error) => {
-                if (showToaster) {
+                if (showToast) {
                     toast.error('Error deleting track');
                 }
                 console.log(error);

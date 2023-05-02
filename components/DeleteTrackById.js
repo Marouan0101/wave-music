@@ -8,8 +8,8 @@ import React from 'react';
 const DeleteTrackById = ({ id, buttonText, showToaster }) => {
     const { isTrackModified, setIsTrackModified } = useContext(AppContext);
     // delete the track from the database
-    const handleDelete = () => {
-        deleteDoc(doc(db, 'tracks', id)).then(
+    const handleDelete = async () => {
+        await deleteDoc(doc(db, 'tracks', id)).then(
             // success
             () => {
                 // if show message is true, show a toast

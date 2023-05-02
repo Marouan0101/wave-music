@@ -23,7 +23,7 @@ const Profile = () => {
         getUserTracks(user).then((tracks) => {
             setTracks(tracks);
         });
-    }, [isTrackModified, isModalOpen]);
+    }, [isTrackModified]);
 
     const createTrack = async () => {
         const trackDoc = await addDoc(collection(db, 'tracks'), {});

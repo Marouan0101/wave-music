@@ -96,7 +96,7 @@ const CreateTrackModal = ({ isModalOpen, setIsModalOpen, trackId }) => {
                 .catch((error) => {
                     // Handle errors during upload
                     console.error('Upload failed:', error);
-                    toast.success('Publish failed :(');
+                    toast.error('Publish failed :(');
                 });
 
             setIsModalOpen(false); // close the modal
